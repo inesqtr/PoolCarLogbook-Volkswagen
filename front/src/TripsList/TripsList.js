@@ -1,11 +1,8 @@
 import React from 'react';
-import Trip from './Trip';
+import Trip from '../Trip/Trip';
 import './TripList.css';
 
 const TripsList = ({ trips }) => {
-
-  
-
 
   return (
     <table className="tftable" border="1">

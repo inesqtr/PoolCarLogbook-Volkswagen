@@ -2,24 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Trip = ({ trip }) => {
-    const tripDetails = (id) => {
-        console.log("i was clicked")
-    }
+    const buttonText = trip.is_finished ? 'See More' : 'Edit'
 
     return (
-        <tbody
-            key={trip.id}
-            onClick={() => tripDetails(trip.id)}>
+        <tbody>
             <tr>
                 <td>{trip.date}</td>
                 <td>{trip.time_start}</td>
                 <td>{trip.driver}</td>
                 <td>{trip.location_destination}</td>
                 <td>
-                    <Link to="/">
-                        {/* UPDATE PATH */}
-                        Edit
+                    <button>
+                        <Link to={{ pathname: `/trips/${trip.id}`, state: trip }}>
+                            {buttonText}
                         </Link>
+                    </button>
                 </td>
             </tr>
         </tbody>

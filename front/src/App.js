@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 
 import './App.css';
-import TripsList from './TripsList';
-import Book from './Book';
+import TripsList from './TripsList/TripsList';
+import Booking from './Booking/Booking';
+import EditTrip from './EditTrip/EditTrip';
 
 class App extends Component {
   constructor(props) {
@@ -31,9 +32,10 @@ class App extends Component {
     // console.log(trips);
     return (
       <div className="App">
-        <Link
+        <button><Link
           to="/book">
           /Book</Link>
+        </button>
         <h1>Pool Car Log Book</h1>
         <Route
           exact
@@ -51,10 +53,11 @@ class App extends Component {
           path="/book"
           render={() => (
             <>
-              <Book />
+              <Booking />
             </>
           )}
         />
+        <Route path='/trips/:id' render={(routerProps) => <EditTrip trip={routerProps.location.state} />} />
       </div>
     );
   }
