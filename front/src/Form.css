@@ -1,8 +1,12 @@
 
 .form{
+    align-self: center;
     align-items: center;
+    max-width: 50%;
 }
 
 .obs-textbox{
-    width: 100%;
+    width: 90%;
+    max-width: 350px;
+    margin: 0 auto;
 }
