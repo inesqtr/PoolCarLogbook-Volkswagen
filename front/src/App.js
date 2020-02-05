@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import './App.css';
 import TripsList from './TripsList';
@@ -30,6 +30,12 @@ class App extends Component {
     const { trips } = this.state;
     return (
       <div className="App">
+        <Link
+        to="/book">
+          /Book</Link>
+        <Link
+        to="/trips_list">
+          /TripsList</Link>
         <h1>Pool Car Log Book</h1>
         <Route
           exact
