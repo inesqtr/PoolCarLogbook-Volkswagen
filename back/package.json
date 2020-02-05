@@ -1,0 +1,29 @@
+{
+  "name": "pool-car-logbook",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "DEBUG=pool-car-logbook:* nodemon ./bin/www",
+    "db:create": "node ./db/create.js",
+    "db:seed": "node ./db/seed.js",
+    "db:drop": "node ./db/drop.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.0",
+    "express-session": "^1.17.0",
+    "http-errors": "~1.6.2",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "nodemon": "^1.19.1"
+  }
+}
