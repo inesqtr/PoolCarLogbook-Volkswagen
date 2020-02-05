@@ -14,7 +14,8 @@ const insertTrip = `INSERT INTO trip
         kms_finish,
         location_start,
         location_destination,
-        observations,
+		observations,
+		is_finished,
         car_id)
     VALUES 
 		('Zé', 
@@ -26,6 +27,7 @@ const insertTrip = `INSERT INTO trip
 		'Rato',
 		'Ikea Alfragide',
 		'uau',
+		false,
 		1  ),
 		('Maria', 
 		'2020-03-12', 
@@ -36,6 +38,7 @@ const insertTrip = `INSERT INTO trip
 		'Rato',
 		'Ikea Loures',
 		'wow',
+		true,
 		2  )`;
 
 connection.query(insertCar, (err) => {
