@@ -1,0 +1,8 @@
+{
+  "short_name": "Pool Car Logbook",
+  "name": "Volkswagen - Pool Car Log Book",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
