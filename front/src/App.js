@@ -9,11 +9,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      trips: []
     };
   }
 
+  componentDidMount() {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(state => ({
+          ...state,
+          trips: data.allTrips
+        }));
+      }
+      )
+  };
+
+
   render() {
+    const { trips } = this.state;
     return (
       <div className="App">
         <Link
@@ -25,10 +39,12 @@ class App extends Component {
         <h1>Pool Car Log Book</h1>
         <Route
           exact
-          path="/trips_list"
+          path="/"
           render={() => (
             <>
-              <TripsList />
+              <TripsList
+                trips={trips}
+              />
             </>
           )}
         />
