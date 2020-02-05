@@ -1,8 +1,8 @@
 import React from 'react';
 
-const CurrentTrip = () => (
+const EditTrip = () => (
   <div>
         CurrentTrip
   </div>
 );
-export default CurrentTrip;
+export default EditTrip;

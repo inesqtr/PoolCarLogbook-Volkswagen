@@ -28,14 +28,12 @@ class App extends Component {
 
   render() {
     const { trips } = this.state;
+    // console.log(trips);
     return (
       <div className="App">
         <Link
-        to="/book">
+          to="/book">
           /Book</Link>
-        <Link
-        to="/trips_list">
-          /TripsList</Link>
         <h1>Pool Car Log Book</h1>
         <Route
           exact

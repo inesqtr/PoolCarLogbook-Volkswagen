@@ -1,42 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Trip from './Trip';
 import './TripList.css';
 
 const TripsList = ({ trips }) => {
 
-  const tripDetails = (id) => {
-    console.log("i was clicked")
-  }
   
-return(
-  <table className="tftable" border="1">
-    <thead>
-      <tr>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Name</th>
-      <th>Destination</th>
-      <th>Edit</th>
-      </tr>
-    </thead>
-    {trips.map((trip) => (
-      <tbody 
-        key={trip.id}
-        onClick={() => tripDetails(trip.id)}>
+
+
+  return (
+    <table className="tftable" border="1">
+      <thead>
         <tr>
-        <td>{trip.date}</td>
-        <td>{trip.time_start}</td>
-        <td>{trip.driver}</td>
-        <td>{trip.location_destination}</td>
-        <td>
-          <Link to="/">
-            {/* UPDATE PATH */}
-            Edit
-          </Link>
-        </td>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Edit</th>
         </tr>
-      </tbody>
-    ))}
-  </table>
-)};
+      </thead>
+      {trips.map((trip) => (
+        <Trip
+          key={trip.id}
+          trip={trip}
+        />
+      ))}
+    </table>
+  )
+};
 export default TripsList;
