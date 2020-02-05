@@ -2,18 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './TripList.css';
 
-// const trips = [{
-//   id: 1, date: '2020-02-15', time: '15.30 - 16.30', name: 'Alexandra', destination: 'Porto',
-// }, {
-//   id: 1, date: '2020-02-15', time: '15.30 - 16.30', name: 'Alexandra', destination: 'Porto',
-// },
-// {
-//   id: 1, date: '2020-02-15', time: '15.30 - 16.30', name: 'Alexandra', destination: 'Porto',
-// },
-// {
-//   id: 1, date: '2020-02-15', time: '15.30 - 16.30', name: 'Alexandra', destination: 'Porto',
-// }];
-
 const TripsList = ({ trips }) => (
   <table className="tftable" border="1">
     <thead>
