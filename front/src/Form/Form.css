@@ -2,6 +2,7 @@
 form{
     align-self: center;
     align-items: center;
+    background-color: red; /* this is a test */
 }
 
 .obs-textbox{
