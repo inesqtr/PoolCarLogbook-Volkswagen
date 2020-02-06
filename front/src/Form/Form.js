@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Form.css';
 import Select from 'react-select';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
 
@@ -13,29 +13,29 @@ class Form extends Component {
       date: "",
       time_start: "",
       time_finish: "",
-      kms_start: "",
-      kms_finish: "",
+      kms_start: 0,
+      kms_finish: 0,
       location_start: "Rato",
       location_destination: "",
       observations: "",
       is_finished: 0,
       car_id: 1,
-      licence_plate: "72-VZ-96"
+      licence_plate: "72-VZ-96",
+      newTrip: {}
     };
   }
 
-  componentDidMount() {
-    if (this.props.selectedTrip) {
-      console.log('hey from form', this.props.selectedTrip)
+  componentDidMount(){
+    if(this.props.selectedTrip){
       this.setState({
         name: this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
         kms_start: this.props.selectedTrip.kms_start,
-        kms_finish: this.props.selectedTrip.time_finish,
+        kms_finish: this.props.selectedTrip.kms_finish,
         location_start: this.props.selectedTrip.location_start,
-        location_destination: this.props.selectedTrip.time_destination,
+        location_destination: this.props.selectedTrip.location_destination,
         observations: this.props.selectedTrip.observations,
         is_finished: this.props.selectedTrip.is_finished,
         car_id: this.props.selectedTrip.car_id,
@@ -44,39 +44,17 @@ class Form extends Component {
   }
 
   onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    let value = e.target.value;
+    // if([e.target.name] === 'date'){
+    //   // const small = value.subst(0,5)
+    //   this.setState(
+    //     {date: small}
+    //   )
+    // }else 
+    this.setState(
+      {[e.target.name]: value}
+    )
   }
-
-  postForm = () => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/trip/create`, {
-      method: "POST",
-      headers: new Headers({
-        "Content-Type": "application/json"
-      }),
-      body: JSON.stringify({
-        "driver": this.state.name,
-        "date": this.state.date,
-        "time_start": this.state.time_start,
-        "time_finish": this.state.time_finish,
-        "kms_start": +this.state.kms_start,
-        "kms_finish": +this.state.kms_finish,
-        "location_start": this.state.location_start,
-        "location_destination": this.state.location_destination,
-        "observations": this.state.observations,
-        "is_finished": +this.state.is_finished,
-        "car_id": +this.state.car_id,
-      })
-    }).then(res => {
-
-      if (res.status === 200) {
-        this.props.history.push("/")
-      }
-    });
-  };
-
-
 
   showCheckbox = () => {
     if (this.props.isNew) return '';
@@ -98,29 +76,77 @@ class Form extends Component {
     if (!this.props.isNew && this.props.trip.is_finished) return ''
     return <button>Delete</button>
   }
-
+  
   hideSubmitButton = () => {
-    if (this.props.isNew) return <button onClick={this.postTrip}>Save</button>
+    if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
     if (!this.props.isNew && this.props.trip.is_finished) return ''
-    return <button onClick={this.editTrip}>Edit</button>
+    return <button onClick={this.handleSubmit}>Edit</button>
+  }
+  
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const {selectedTrip, editTrip, postTrip } = this.props;
+    const {name, 
+      date, 
+      time_start, 
+      time_finish, 
+      kms_start, 
+      kms_finish, 
+      location_start, 
+      location_destination, 
+      observations, 
+      is_finished, 
+      car_id, 
+      newTrip } = this.state
+
+    this.setState({newTrip: {name, 
+      date, 
+      time_start, 
+      time_finish, 
+      kms_start, 
+      kms_finish, 
+      location_start, 
+      location_destination, 
+      observations, 
+      is_finished, 
+      car_id }}, () => {
+      if(selectedTrip && selectedTrip.id){
+        editTrip()
+      }else{
+        console.log('newTrip', newTrip)
+        postTrip(newTrip)
+      }}
+      )
   }
 
 
   render() {
-    const { name } = this.state;
+    console.log(this.state.date, 'date')
+    const { name, 
+            date, 
+            time_start, 
+            time_finish, 
+            kms_start, 
+            kms_finish, 
+            location_start, 
+            location_destination, 
+            observations, 
+            is_finished, 
+            car_id 
+          } = this.state;
 
     return (
-      <Container>
+      // <Container>
         <form className="col-md-6 offset-md-3">
-          <label>
-            Name:
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={this.onChange}
-          />
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={this.onChange}
+            />
+          </div>
 
           <div>
             <label>
@@ -128,11 +154,12 @@ class Form extends Component {
               <input
                 type="date"
                 name="date"
-                min="2010-01-01"
+                min="2020-01-01"
                 max="2049-12-31"
                 pattern="\d{4}-\d{2}-\d{2}" // unsuported browsers fallback
                 required
                 onChange={this.onChange}
+                value={date}
               />
             </label>
           </div>
@@ -146,6 +173,7 @@ class Form extends Component {
                 pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
                 required
                 onChange={this.onChange}
+                value={time_start}
               />
             </label>
           </div>
@@ -158,6 +186,7 @@ class Form extends Component {
                 pattern="[0-9]{2}:[0-9]{2}"
                 required
                 onChange={this.onChange}
+                value={time_finish}
               />
             </label>
           </div>
@@ -173,6 +202,7 @@ class Form extends Component {
       </label>
       </div> */}
 
+
           <div>
             <label>
               Kms start:
@@ -180,7 +210,7 @@ class Form extends Component {
                 name="kms_start"
                 type="number"
                 onChange={this.onChange}
-                value={this.state.kms_start}
+                value={kms_start}
               />
             </label>
           </div>
@@ -191,7 +221,7 @@ class Form extends Component {
                 name="kms_finish"
                 type="number"
                 onChange={this.onChange}
-                value={this.state.kms_finish}
+                value={kms_finish}
               />
             </label>
           </div>
@@ -203,7 +233,7 @@ class Form extends Component {
                 name="location_destination"
                 type="text"
                 onChange={this.onChange}
-                value={this.state.location_destination}
+                value={location_destination}
               />
             </label>
           </div>
@@ -215,7 +245,7 @@ class Form extends Component {
                 name="observations"
                 className="obs-textbox"
                 onChange={this.onChange}
-                value={this.state.observations}
+                value={observations}
               />
             </label>
           </div>
@@ -225,6 +255,7 @@ class Form extends Component {
           {this.hideDeleteButton()}
         </form>
       </Container>
+
     )
   }
 };

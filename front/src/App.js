@@ -7,13 +7,14 @@ import EditTrip from './EditTrip/EditTrip';
 
 // import Calendar from './Calendar';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       trips: [],
       selectedTrip: {},
-      isNew: true
+      isNew: true, 
     };
   }
 
@@ -28,6 +29,40 @@ class App extends Component {
       }
       )
   };
+
+  postTrip = (newTrip) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/trip/create`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        "driver": newTrip.name,
+        "date": newTrip.date,
+        "time_start": newTrip.time_start,
+        "time_finish": newTrip.time_finish,
+        "kms_start": +newTrip.kms_start,
+        "kms_finish": +newTrip.kms_finish,
+        "location_start": newTrip.location_start,
+        "location_destination": newTrip.location_destination,
+        "observations": newTrip.observations,
+        "is_finished": +newTrip.is_finished,
+        "car_id": +newTrip.car_id,
+      })
+    }).then(res => {
+
+      if (res.status === 200) {
+        const updatedTrips= this.state.trips.push(newTrip)
+        console.log(updatedTrips, 'updatedTrips', 'newtrip', newTrip)
+        // this.setState({trips: updatedTrips})
+        return this.props.history.push("/")
+      }
+    });
+  };
+
+  editTrip = () => {
+    console.log('i am editing')
+}
 
   handleSelectTrip = (trip) => {
     console.log('trip', trip)
@@ -46,7 +81,9 @@ class App extends Component {
           Book</Link>
         </button>
         <h1>Pool Car Log Book</h1>
+
         {/* <Calendar/> */}
+
         <Route
           exact
           path="/"
@@ -66,6 +103,8 @@ class App extends Component {
           render={() => (
             <Booking
               isNew={isNew}
+              postTrip={this.postTrip}
+              onChange={this.onChange}
             />
           )}
         />
@@ -76,6 +115,7 @@ class App extends Component {
             trip={routerProps.location.state} 
             isNew={isNew}
             selectedTrip={selectedTrip}
+            editTrip={this.editTrip}
           />}
         />
       </div>

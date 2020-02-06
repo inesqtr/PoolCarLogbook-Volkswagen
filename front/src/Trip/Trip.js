@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 const Trip = ({ trip, handleSelectTrip }) => {
@@ -19,10 +19,7 @@ const Trip = ({ trip, handleSelectTrip }) => {
                 <td>
                     <button
                     onClick={()=> handleSelectTrip(trip)}>
-                        {/* <Link to={{ pathname: `/trips/${trip.id}`, state: trip }}>
-                        </Link> */}
-
-                            {buttonText}
+                        {buttonText}
                     </button>
                 </td>
             </tr>
