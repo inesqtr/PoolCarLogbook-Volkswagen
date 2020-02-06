@@ -40,6 +40,25 @@ class Form extends Component {
     };
   }
 
+  componentDidMount(){
+    if(this.props.selectedTrip){
+      console.log('hey from form',this.props.selectedTrip)
+      this.setState({
+        name : this.props.selectedTrip.driver,
+        date: this.props.selectedTrip.date,
+        time_start: this.props.selectedTrip.time_start,
+        time_finish: this.props.selectedTrip.time_finish,
+        kms_start: this.props.selectedTrip.kms_start,
+        kms_finish: this.props.selectedTrip.time_finish,
+        location_start: this.props.selectedTrip.location_start,
+        location_destination: this.props.selectedTrip.time_destination,
+        observations: this.props.selectedTrip.observations,
+        is_finished: this.props.selectedTrip.is_finished,
+        car_id: this.props.selectedTrip.car_id,
+      })
+    }
+  }
+
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -149,55 +168,60 @@ class Form extends Component {
       />
       </label>
       </div> */}
+      
+      <div>
+      <label>
+      Kms start:
+      <input
+      name="kms_start"
+      type="number"
+      onChange={this.onChange}
+      value={this.state.kms_start}
+      />
+      </label>
+      </div>
+      <div>
+      <label>
+      Kms finish:
+      <input
+      name="kms_finish"
+      type="number"
+      onChange={this.onChange}
+      value={this.state.kms_finish}
+      />
+      </label>
+      </div>
+      
+      <div>
+      <label>
+      Destination:
+      <input
+      name="location_destination"
+      type="text"
+      onChange={this.onChange}
+      value={this.state.location_destination}
+      />
+      </label>
+      </div>
+      
+      <div>
+      <label>
+      Observations:
+      <textarea
+      name="observations"
+      className="obs-textbox"
+      onChange={this.onChange}
+      value={this.state.observations}
+      />
+      </label>
+      </div>
+  
+      <div>{this.showCheckboxAndDelete()}</div>
 
-          <div>
-            <label>
-              Kms start:
-              <input
-                name="kms_start"
-                type="number"
-                onChange={this.onChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Kms finish:
-              <input
-                name="kms_finish"
-                type="number"
-                onChange={this.onChange}
-              />
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Destination:
-              <input
-                name="location_destination"
-                type="text"
-                onChange={this.onChange}
-              />
-            </label>
-          </div>
-
-          <div>
-            <label>
-              Observations:
-              <textarea
-                name="observations"
-                className="obs-textbox"
-                onChange={this.onChange}
-              />
-            </label>
-          </div>
-          <div>{this.showCheckboxAndDelete()}</div>
-
-          <div>
-            {this.hideSubmitButton() ? '' : <button onClick={this.postForm}>Save</button>}
-          </div>
-        </form>
+      <div>
+        {this.hideSubmitButton() ? '' : <button onClick={this.postForm}>Save</button>}
+      </div>
+      </form>
       </Container>
     )
   }

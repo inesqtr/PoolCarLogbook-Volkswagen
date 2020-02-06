@@ -3,7 +3,7 @@ import Trip from '../Trip/Trip';
 import Calendar from '../Calendar';
 import './TripList.css';
 
-const TripsList = ({ trips, isNew }) => {
+const TripsList = ({ trips, handleSelectTrip }) => {
   return (
     <>
       <Calendar
@@ -20,15 +20,14 @@ const TripsList = ({ trips, isNew }) => {
             <th>Edit</th>
           </tr>
         </thead>
-
-        {trips.map((trip) => (
-          <Trip
-            key={trip.id}
-            trip={trip}
-          />
-        ))}
-      </table>
-    </>
+      {trips.map((trip) => (
+        <Trip
+          handleSelectTrip = {handleSelectTrip}
+          key={trip.id}
+          trip={trip}
+        />
+      ))}
+    </table>
   )
 };
 
