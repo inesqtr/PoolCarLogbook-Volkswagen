@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
 const Trip = ({ trip }) => {
     const buttonText = trip.is_finished ? 'See More' : 'Edit'
-
+    console.log(trip)
     return (
         <tbody>
             <tr>
-                <td>{trip.date}</td>
+                <td>
+                    <Moment format="YYYY/MM/DD">
+                        {trip.date}
+                    </Moment>
+                </td>
                 <td>{trip.time_start}</td>
                 <td>{trip.driver}</td>
                 <td>{trip.location_destination}</td>
