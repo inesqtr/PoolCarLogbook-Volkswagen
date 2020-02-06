@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 
-const EditTrip = ({ isNew, trip, selectedTrip }) => {
+const EditTrip = ({ isNew, trip, selectedTrip, editTrip }) => {
   return (
     <div>
       <Link to="/" className='backButton'>Go Back</Link>
@@ -11,6 +11,7 @@ const EditTrip = ({ isNew, trip, selectedTrip }) => {
         isNew={!isNew}
         trip={trip}
         selectedTrip={selectedTrip}
+        editTrip={editTrip}
       />
     </div>
   );
