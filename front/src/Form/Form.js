@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Form.css';
 import Select from 'react-select';
 import { withRouter } from 'react-router-dom'
+import { Container } from 'react-bootstrap';
+
 
 
 // MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
@@ -73,10 +75,8 @@ class Form extends Component {
 
   render() {
 
-    console.log(this.state)
     return(
-
-      <div className="form">
+      <Container>
       <div>
       <label className="form">
       Name:
@@ -189,8 +189,7 @@ class Form extends Component {
       Save
       </button>
       </div>
-      </div>
-
+      </Container>
       )}};
       
       export default withRouter(Form);
