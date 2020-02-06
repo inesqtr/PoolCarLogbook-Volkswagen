@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-
 import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
@@ -12,7 +11,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trips: []
+      trips: [],
+      isNew: true
     };
   }
 
@@ -30,12 +30,12 @@ class App extends Component {
 
 
   render() {
-    const { trips } = this.state;
+    const { trips, isNew } = this.state;
     return (
       <div className="App">
         <button><Link
-          to="/book">
-          /Book</Link>
+          to="/booking">
+          Book</Link>
         </button>
         <h1>Pool Car Log Book</h1>
           <Calendar/>
@@ -43,23 +43,28 @@ class App extends Component {
           exact
           path="/"
           render={() => (
-            <>
-              <TripsList
-                trips={trips}
-              />
-            </>
+            <TripsList
+              trips={trips}
+            />
           )}
         />
         <Route
           exact
-          path="/book"
+          path="/booking"
           render={() => (
-            <>
-              <Booking />
-            </>
+            <Booking
+              isNew={isNew}
+            />
           )}
         />
-        <Route path='/trips/:id' render={(routerProps) => <EditTrip trip={routerProps.location.state} />} />
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              trip={routerProps.location.state}
+              isNew={isNew}
+            />}
+        />
       </div>
     );
   }

@@ -3,7 +3,6 @@ import Trip from '../Trip/Trip';
 import './TripList.css';
 
 const TripsList = ({ trips }) => {
-
   return (
     <table className="tftable" border="1">
       <thead>
@@ -15,6 +14,7 @@ const TripsList = ({ trips }) => {
           <th>Edit</th>
         </tr>
       </thead>
+
       {trips.map((trip) => (
         <Trip
           key={trip.id}
@@ -24,4 +24,6 @@ const TripsList = ({ trips }) => {
     </table>
   )
 };
+
+
 export default TripsList;
