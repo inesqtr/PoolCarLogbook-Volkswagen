@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Form.css';
 import Select from 'react-select';
 import { withRouter } from 'react-router-dom'
+import { Container } from 'react-bootstrap';
+
 
 
 // MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
@@ -73,24 +75,21 @@ class Form extends Component {
 
   render() {
 
-    console.log(this.state)
     return(
-
-      <div className="form">
-      <div>
-      <label className="form">
+      <Container>
+      <form className="col-md-6 offset-md-3">
+      <label>
       Name:
+      </label>
       <input
       type="text"
       name="name"
       value={this.state.name}
       onChange={this.onChange}
       />
-      </label>
-      </div>
       
       <div>
-      <label className="form">
+      <label>
       Date:
       <input
       type="date"
@@ -129,23 +128,23 @@ class Form extends Component {
       </label>
       </div>
       
-      <div>
+      {/* <div>
       <label>
       Car:
-      {/* <Select
+      <Select
       classNamePrefix="select"
       options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
       onChange={this.onChange}/>
-      /> */}
+      />
       </label>
-      </div>
+      </div> */}
       
       <div>
       <label>
       Kms start:
       <input
       name="kms_start"
-      type="text"
+      type="number"
       onChange={this.onChange}
       />
       </label>
@@ -155,7 +154,7 @@ class Form extends Component {
       Kms finish:
       <input
       name="kms_finish"
-      type="text"
+      type="number"
       onChange={this.onChange}
       />
       </label>
@@ -189,8 +188,8 @@ class Form extends Component {
       Save
       </button>
       </div>
-      </div>
-
+      </form>
+      </Container>
       )}};
       
       export default withRouter(Form);
