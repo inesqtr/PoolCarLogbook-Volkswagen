@@ -1,0 +1,23 @@
+/* to style the calendar modal */
+
+.modal-wrapper {
+   width: 100vw;
+   height: 140vh;
+   position: absolute;
+}
+
+.modal,
+.box-card {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   /* background-color: var(--silver50); */
+   width: fit-content;
+   height: auto;
+   position: relative;
+   top: 0;
+}
+
+.modal-close:first-child {
+   background-color: var(--white);
+}

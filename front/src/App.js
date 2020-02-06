@@ -5,8 +5,6 @@ import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
 
-import Calendar from './Calendar';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +44,7 @@ class App extends Component {
           Book</Link>
         </button>
         <h1>Pool Car Log Book</h1>
-          <Calendar/>
+          
         <Route
           exact
           path="/"
