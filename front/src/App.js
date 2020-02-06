@@ -18,16 +18,19 @@ class App extends Component {
     };
   }
 
+  getAllTrips =  () => {
+    return fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        trips: data.allTrips
+      });
+    }
+    )
+  } 
+
   componentDidMount() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState(state => ({
-          ...state,
-          trips: data.allTrips
-        }));
-      }
-      )
+    this.getAllTrips()
   };
 
   postTrip = (newTrip) => {
@@ -52,16 +55,45 @@ class App extends Component {
     }).then(res => {
 
       if (res.status === 200) {
-        const updatedTrips= this.state.trips.push(newTrip)
-        console.log(updatedTrips, 'updatedTrips', 'newtrip', newTrip)
-        // this.setState({trips: updatedTrips})
-        return this.props.history.push("/")
+        this.getAllTrips()
+        .then(
+          () => this.props.history.push("/")
+        )
       }
     });
   };
 
-  editTrip = () => {
-    console.log('i am editing')
+  editTrip = (newTrip) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/trip/edit`,
+    {
+        method:  'PUT',
+        headers:  new Headers({
+                'Content-Type':  'application/json'
+        }),
+        body:  JSON.stringify({
+          "driver": newTrip.name,
+          "date": newTrip.date,
+          "time_start": newTrip.time_start,
+          "time_finish": newTrip.time_finish,
+          "kms_start": +newTrip.kms_start,
+          "kms_finish": +newTrip.kms_finish,
+          "location_start": newTrip.location_start,
+          "location_destination": newTrip.location_destination,
+          "observations": newTrip.observations,
+          "is_finished": +newTrip.is_finished,
+          "car_id": +newTrip.car_id,
+          "id": +newTrip.id
+        }),
+    })
+    .then(res => {
+
+      if (res.status === 200) {
+        this.getAllTrips()
+        .then(
+          () => this.props.history.push("/")
+        )
+      }
+    });
 }
 
   handleSelectTrip = (trip) => {

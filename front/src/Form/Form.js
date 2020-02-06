@@ -44,15 +44,8 @@ class Form extends Component {
   }
 
   onChange = (e) => {
-    let value = e.target.value;
-    // if([e.target.name] === 'date'){
-    //   // const small = value.subst(0,5)
-    //   this.setState(
-    //     {date: small}
-    //   )
-    // }else 
     this.setState(
-      {[e.target.name]: value}
+      {[e.target.name]: e.target.value}
     )
   }
 
@@ -86,6 +79,7 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {selectedTrip, editTrip, postTrip } = this.props;
+    
     const {name, 
       date, 
       time_start, 
@@ -99,21 +93,27 @@ class Form extends Component {
       car_id, 
       newTrip } = this.state
 
-    this.setState({newTrip: {name, 
-      date, 
-      time_start, 
-      time_finish, 
-      kms_start, 
-      kms_finish, 
-      location_start, 
-      location_destination, 
-      observations, 
-      is_finished, 
-      car_id }}, () => {
-      if(selectedTrip && selectedTrip.id){
-        editTrip()
-      }else{
-        console.log('newTrip', newTrip)
+      
+      this.setState( () => {
+        
+        const newT = { name, 
+          date, 
+          time_start, 
+          time_finish, 
+          kms_start, 
+          kms_finish, 
+          location_start, 
+          location_destination, 
+          observations, 
+          is_finished, 
+          car_id}
+
+        return { newTrip: newT }}, 
+        () => {
+          
+          if(selectedTrip && selectedTrip.id){
+            editTrip(newTrip)
+          }else{
         postTrip(newTrip)
       }}
       )
@@ -121,7 +121,6 @@ class Form extends Component {
 
 
   render() {
-    console.log(this.state.date, 'date')
     const { name, 
             date, 
             time_start, 
@@ -136,7 +135,7 @@ class Form extends Component {
           } = this.state;
 
     return (
-      // <Container>
+      <Container>
         <form className="col-md-6 offset-md-3">
           <div>
             <label>Name:</label>
@@ -255,7 +254,6 @@ class Form extends Component {
           {this.hideDeleteButton()}
         </form>
       </Container>
-
     )
   }
 };
