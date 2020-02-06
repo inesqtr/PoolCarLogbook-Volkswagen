@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
+
 
 import './App.css';
 import TripsList from './TripsList/TripsList';
@@ -11,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       trips: [],
+      selectedTrip: {},
       isNew: true
     };
   }
@@ -27,9 +29,16 @@ class App extends Component {
       )
   };
 
+  handleSelectTrip = (trip) => {
+    console.log('trip', trip)
+    this.setState({
+      selectedTrip: trip
+    }, () => this.props.history.push(`/trips/${trip.id}`))
+  }
+
 
   render() {
-    const { trips, isNew } = this.state;
+    const { trips, isNew, selectedTrip } = this.state;
     return (
       <div className="App">
         <button><Link
@@ -44,6 +53,8 @@ class App extends Component {
             <>
               <TripsList
                 trips={trips}
+                selectedTrip={selectedTrip}
+                handleSelectTrip={this.handleSelectTrip}
               />
             </>
           )}
@@ -65,6 +76,7 @@ class App extends Component {
           <EditTrip 
             trip={routerProps.location.state} 
             isNew={isNew}
+            selectedTrip={selectedTrip}
           />}
         />
       </div>
@@ -72,4 +84,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
