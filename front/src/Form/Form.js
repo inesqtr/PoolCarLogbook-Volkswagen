@@ -5,22 +5,6 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
 
-
-// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
-//  const Form = ({ isNew, trip }) => {
-//  const showCheckboxAndDelete = () => {
-//    if (!isNew && trip.is_finished) return '';
-//    if (!isNew) return <div>I've finished the trip</div>;
-//
-//  }
-
-//  const hideSubmitButton = () => {
-//    if (!isNew && trip.is_finished) return true;
-//  }
-
-//  {showCheckboxAndDelete()}
-//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
-
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +28,7 @@ class Form extends Component {
   componentDidMount(){
     if(this.props.selectedTrip){
       this.setState({
-        name : this.props.selectedTrip.driver,
+        name: this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
@@ -72,13 +56,31 @@ class Form extends Component {
     )
   }
 
-  showCheckboxAndDelete = () => {
-    if (!this.props.isNew && this.state.is_finished) return '';
-    if (!this.props.isNew) return <div>I've finished the trip</div>;
+  showCheckbox = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return '';
+    if (!this.props.isNew) {
+      return <div>
+        <label for="checkbox">I've finished the trip</label>
+        <input
+          id="checkbox"
+          name="checkedFinish"
+          type="checkbox"
+          onChange={this.onChange} />
+      </div>
+    }
+  }
+
+  hideDeleteButton = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    return <button>Delete</button>
   }
   
   hideSubmitButton = () => {
-    if (!this.props.isNew && this.state.is_finished) return true;
+    if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
+    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    return <button onClick={this.handleSubmit}>Edit</button>
   }
   
   handleSubmit = (e) => {
@@ -116,6 +118,7 @@ class Form extends Component {
       }}
       )
   }
+
 
   render() {
     console.log(this.state.date, 'date')
@@ -198,64 +201,61 @@ class Form extends Component {
       />
       </label>
       </div> */}
-      
-      <div>
-      <label>
-      Kms start:
-      <input
-      name="kms_start"
-      type="number"
-      onChange={this.onChange}
-      value={kms_start}
-      />
-      </label>
-      </div>
-      <div>
-      <label>
-      Kms finish:
-      <input
-      name="kms_finish"
-      type="number"
-      onChange={this.onChange}
-      value={kms_finish}
-      />
-      </label>
-      </div>
-      
-      <div>
-        <label>Destination:</label>
-        <input
-          type="text"
-          name="location_destination"
-          onChange={this.onChange}
-          value={location_destination}
-        />
-      </div>
-      
-      <div>
-      <label>
-      Observations:
-      <textarea
-      name="observations"
-      className="obs-textbox"
-      onChange={this.onChange}
-      value={observations}
-      />
-      </label>
-      </div>
-  
-      <div>{this.showCheckboxAndDelete()}</div>
 
-      <div>
-        {
-          this.hideSubmitButton() ? '' : 
-          <button onClick={this.handleSubmit}>
-            Save
-          </button>
-        }
-      </div>
-      </form>
-      // </Container>
+
+          <div>
+            <label>
+              Kms start:
+              <input
+                name="kms_start"
+                type="number"
+                onChange={this.onChange}
+                value={kms_start}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Kms finish:
+              <input
+                name="kms_finish"
+                type="number"
+                onChange={this.onChange}
+                value={kms_finish}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Destination:
+              <input
+                name="location_destination"
+                type="text"
+                onChange={this.onChange}
+                value={location_destination}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Observations:
+              <textarea
+                name="observations"
+                className="obs-textbox"
+                onChange={this.onChange}
+                value={observations}
+              />
+            </label>
+          </div>
+
+          {this.showCheckbox()}
+          {this.hideSubmitButton()}
+          {this.hideDeleteButton()}
+        </form>
+      </Container>
+
     )
   }
 };
