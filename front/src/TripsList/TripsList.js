@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../Trip/Trip';
 import './TripList.css';
 
-const TripsList = ({ trips }) => {
+const TripsList = ({ trips, handleSelectTrip }) => {
   return (
     <table className="tftable" border="1">
       <thead>
@@ -17,6 +17,7 @@ const TripsList = ({ trips }) => {
 
       {trips.map((trip) => (
         <Trip
+          handleSelectTrip = {handleSelectTrip}
           key={trip.id}
           trip={trip}
         />
