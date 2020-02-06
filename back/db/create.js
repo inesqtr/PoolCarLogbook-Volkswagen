@@ -1,5 +1,9 @@
 const connection = require('./config');
 
+const Database = `
+    CREATE DATABASE hackathonvw
+`;
+
 const Car = `
     CREATE TABLE IF NOT EXISTS car (
         id INT NOT NULL AUTO_INCREMENT,
@@ -28,22 +32,29 @@ const Trip = `
     )
 `;
 
-connection.query(Car, (err) => {
+connection.query(Database, (err) => {
     if (err) {
         console.log(err);
         connection.end();
     } else {
-        console.log('car created');
-        connection.query(Trip, (err) => {
+        console.log('database created');
+        connection.query(Car, (err) => {
             if (err) {
                 console.log(err);
                 connection.end();
             } else {
-                console.log('trip created');
-                connection.end();
+                console.log('car created');
+                connection.query(Trip, (err) => {
+                    if (err) {
+                        console.log(err);
+                        connection.end();
+                    } else {
+                        console.log('trip created');
+                        connection.end();
+                    }
+                }
+                )
             }
-        }
-        )
+        })
     }
-})
-
+});

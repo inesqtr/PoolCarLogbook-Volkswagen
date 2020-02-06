@@ -12,3 +12,35 @@ Wild Code School 3 days hackathon
 Digital “pool log book” for VW SDC:LX. 
 
 Mobile-friendly app with the ability to schedule a car and see past trips.
+
+
+### Setup
+
+#### *On the front folder*
+
+1. Create a .env file with the following environment variables:
+
+    REACT_APP_SERVER_URL=http://localhost:5000
+
+2. To run locally do: 
+
+    yarn start
+
+    Runs the app in the development mode.
+    Open http://localhost:3000 to view it in the browser.
+
+
+#### *On the back folder*
+
+1. Create a .env file with the following environment variables:
+
+    JAWSDB_URL=mysql://[YourUsername]:[YourPassword]@localhost/hackathonvw?multipleStatements=true
+
+2. 
+
+3. To run locally do: 
+
+    yarn dev
+
+    Runs the app in the development mode.
+    Open http://localhost:5000 to view it in the browser.
