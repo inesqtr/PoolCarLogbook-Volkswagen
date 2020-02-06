@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-
 import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
@@ -41,31 +40,27 @@ class App extends Component {
           exact
           path="/"
           render={() => (
-            <>
-              <TripsList
-                trips={trips}
-              />
-            </>
+            <TripsList
+              trips={trips}
+            />
           )}
         />
         <Route
           exact
           path="/booking"
           render={() => (
-            <>
-              <Booking 
-                isNew={isNew}
-              />
-            </>
+            <Booking
+              isNew={isNew}
+            />
           )}
         />
-        <Route 
-          path='/trips/:id' 
-          render={(routerProps) => 
-          <EditTrip 
-            trip={routerProps.location.state} 
-            isNew={isNew}
-          />}
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              trip={routerProps.location.state}
+              isNew={isNew}
+            />}
         />
       </div>
     );
