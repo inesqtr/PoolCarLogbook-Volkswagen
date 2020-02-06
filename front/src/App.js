@@ -29,7 +29,6 @@ class App extends Component {
 
   render() {
     const { trips } = this.state;
-    // console.log(trips);
     return (
       <div className="App">
         <button><Link
