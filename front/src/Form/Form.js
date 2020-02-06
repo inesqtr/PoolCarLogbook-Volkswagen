@@ -5,22 +5,6 @@ import { withRouter } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
 
-
-// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
-//  const Form = ({ isNew, trip }) => {
-//  const showCheckboxAndDelete = () => {
-//    if (!isNew && trip.is_finished) return '';
-//    if (!isNew) return <div>I've finished the trip</div>;
-//
-//  }
-
-//  const hideSubmitButton = () => {
-//    if (!isNew && trip.is_finished) return true;
-//  }
-
-//  {showCheckboxAndDelete()}
-//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
-
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +20,7 @@ class Form extends Component {
       observations: "",
       is_finished: 0,
       car_id: 1,
-      licence_plate: "72-VZ-96",
+      licence_plate: "72-VZ-96"
     };
   }
 
@@ -73,14 +57,35 @@ class Form extends Component {
     });
   };
 
-  showCheckboxAndDelete = () => {
-    if (!this.props.isNew && this.state.is_finished) return '';
-    if (!this.props.isNew) return <div>I've finished the trip</div>;
+
+
+  showCheckbox = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return '';
+    if (!this.props.isNew) {
+      return <div>
+        <label for="checkbox">I've finished the trip</label>
+        <input
+          id="checkbox"
+          name="checkedFinish"
+          type="checkbox"
+          onChange={this.onChange} />
+      </div>
+    }
+  }
+
+  hideDeleteButton = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    return <button>Delete</button>
   }
 
   hideSubmitButton = () => {
-    if (!this.props.isNew && this.state.is_finished) return true;
+    if (this.props.isNew) return <button onClick={this.postTrip}>Save</button>
+    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    return <button onClick={this.editTrip}>Edit</button>
   }
+
 
   render() {
     const { name } = this.state;
@@ -191,11 +196,9 @@ class Form extends Component {
               />
             </label>
           </div>
-          <div>{this.showCheckboxAndDelete()}</div>
-
-          <div>
-            {this.hideSubmitButton() ? '' : <button onClick={this.postForm}>Save</button>}
-          </div>
+          {this.showCheckbox()}
+          {this.hideSubmitButton()}
+          {this.hideDeleteButton()}
         </form>
       </Container>
     )
