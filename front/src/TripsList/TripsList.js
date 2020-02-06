@@ -3,12 +3,16 @@ import Trip from '../Trip/Trip';
 import Calendar from '../Calendar';
 import './TripList.css';
 
-const TripsList = ({ isNew, trips, handleSelectTrip }) => {
+const TripsList = ({ isNew, trips, handleSelectTrip, selectedTrip, postTrip,onChange }) => {
   return (
     <>
       <Calendar
         isNew={isNew}
         trips={trips}
+        selectedTrip={selectedTrip}
+        handleSelectTrip={handleSelectTrip}
+        postTrip={postTrip}
+        onChange={onChange}
       />
       <table className="tftable" border="1">
         <thead>

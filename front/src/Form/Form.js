@@ -136,7 +136,7 @@ class Form extends Component {
           } = this.state;
 
     return (
-      // <Container>
+      <Container>
         <form className="col-md-6 offset-md-3">
           <div>
             <label>Name:</label>

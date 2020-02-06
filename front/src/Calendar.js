@@ -80,7 +80,12 @@ export default class Calendar extends Component {
     }
   }
 
+  
+  
+  
   componentDidMount() {
+    const tripsForCal = []
+    //this.setState({items:tripsForCal});
     this.setState({items:items});
   }
 
@@ -162,7 +167,7 @@ export default class Calendar extends Component {
         this.state.showModal ? 
             <Modal clickOutside={this._closeModal} >
               <BrowserRouter>
-                <Booking isNew={this.props.isNew}/>
+                <Booking isNew={this.props.isNew} trips={this.props.trips} postTrip={this.props.postTrip}/>
               </BrowserRouter>
             </Modal> 
             : ''
