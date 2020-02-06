@@ -13,8 +13,10 @@ class App extends Component {
     super(props);
     this.state = {
       trips: [],
+      tripsByDriver: [],
       selectedTrip: {},
-      isNew: true, 
+      isNew: true,
+      isFiltered: false,
     };
   }
 
@@ -52,7 +54,7 @@ class App extends Component {
     }).then(res => {
 
       if (res.status === 200) {
-        const updatedTrips= this.state.trips.push(newTrip)
+        const updatedTrips = this.state.trips.push(newTrip)
         console.log(updatedTrips, 'updatedTrips', 'newtrip', newTrip)
         // this.setState({trips: updatedTrips})
         return this.props.history.push("/")
@@ -62,7 +64,7 @@ class App extends Component {
 
   editTrip = () => {
     console.log('i am editing')
-}
+  }
 
   handleSelectTrip = (trip) => {
     console.log('trip', trip)
@@ -71,9 +73,18 @@ class App extends Component {
     }, () => this.props.history.push(`/trips/${trip.id}`))
   }
 
+  filterByDriver = (e) => {
+    const checkAll = e.value === 'all' ? false : true
+    const filtered = this.state.trips.filter(trip => trip.driver === e.value);
+    this.setState({
+      tripsByDriver: filtered,
+      isFiltered:checkAll
+    })
+  }
+
 
   render() {
-    const { trips, isNew, selectedTrip } = this.state;
+    const { trips, isNew, selectedTrip, tripsByDriver, isFiltered } = this.state;
     return (
       <div className="App">
         <button><Link
@@ -91,8 +102,11 @@ class App extends Component {
             <>
               <TripsList
                 trips={trips}
+                tripsByDriver={tripsByDriver}
                 selectedTrip={selectedTrip}
                 handleSelectTrip={this.handleSelectTrip}
+                filterByDriver={this.filterByDriver}
+                isFiltered={isFiltered}
               />
             </>
           )}
@@ -108,15 +122,15 @@ class App extends Component {
             />
           )}
         />
-        <Route 
-          path='/trips/:id' 
-          render={(routerProps) => 
-          <EditTrip 
-            trip={routerProps.location.state} 
-            isNew={isNew}
-            selectedTrip={selectedTrip}
-            editTrip={this.editTrip}
-          />}
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              trip={routerProps.location.state}
+              isNew={isNew}
+              selectedTrip={selectedTrip}
+              editTrip={this.editTrip}
+            />}
         />
       </div>
     );

@@ -254,7 +254,7 @@ class Form extends Component {
           {this.hideSubmitButton()}
           {this.hideDeleteButton()}
         </form>
-      </Container>
+      // </Container>
 
     )
   }
