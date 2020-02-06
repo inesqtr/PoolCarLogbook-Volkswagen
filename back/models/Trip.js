@@ -53,18 +53,17 @@ Trip.create = (trip, callback) => {
 					+trip.kms_finish,
 					trip.location_start,
 					trip.location_destination,
-					observations,
-					+is_finished,
-					+car_id,
+					trip.observations,
+					+trip.is_finished,
+					+trip.car_id,
 				],
 				(err, results, fields) => {
-					console.log('hey from model', err)	
 					callback(err, results, fields);
 	  },
 	);
   };
 
-  Trip.edit = (doc, callback) => {
+  Trip.edit = (trip, callback) => {
 	connection.query(
 	  `UPDATE trip 
 	  SET 		
@@ -89,9 +88,10 @@ Trip.create = (trip, callback) => {
 		+trip.kms_finish,
 		trip.location_start,
 		trip.location_destination,
-		observations,
-		+is_finished,
-		+car_id,
+		trip.observations,
+		+trip.is_finished,
+		+trip.car_id,
+		+trip.id
 	  ],
 	  (err, results, fields) => {
 		callback(err, results, fields);
@@ -99,7 +99,7 @@ Trip.create = (trip, callback) => {
 	);
   };
   
-  Trip.delete = (doc, callback) => {
+  Trip.delete = (trip, callback) => {
 	connection.query(
 	  `DELETE FROM trip 
 	   WHERE id = ?`,

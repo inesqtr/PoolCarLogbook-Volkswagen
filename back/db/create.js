@@ -19,7 +19,7 @@ const Trip = `
     kms_finish INT,
     location_start VARCHAR(225) NOT NULL,
     location_destination VARCHAR(225) NOT NULL,
-    observations VARCHAR(225),
+    observations VARCHAR(225) NULL,
     is_finished BOOL NOT NULL DEFAULT 0,
     car_id INT NOT NULL,
     PRIMARY KEY (id),
