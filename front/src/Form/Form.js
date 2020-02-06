@@ -77,20 +77,19 @@ class Form extends Component {
 
     return(
       <Container>
-      <div>
-      <label className="form">
+      <form className="col-md-6 offset-md-3">
+      <label>
       Name:
+      </label>
       <input
       type="text"
       name="name"
       value={this.state.name}
       onChange={this.onChange}
       />
-      </label>
-      </div>
       
       <div>
-      <label className="form">
+      <label>
       Date:
       <input
       type="date"
@@ -129,23 +128,23 @@ class Form extends Component {
       </label>
       </div>
       
-      <div>
+      {/* <div>
       <label>
       Car:
-      {/* <Select
+      <Select
       classNamePrefix="select"
       options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
       onChange={this.onChange}/>
-      /> */}
+      />
       </label>
-      </div>
+      </div> */}
       
       <div>
       <label>
       Kms start:
       <input
       name="kms_start"
-      type="text"
+      type="number"
       onChange={this.onChange}
       />
       </label>
@@ -155,7 +154,7 @@ class Form extends Component {
       Kms finish:
       <input
       name="kms_finish"
-      type="text"
+      type="number"
       onChange={this.onChange}
       />
       </label>
@@ -189,6 +188,7 @@ class Form extends Component {
       Save
       </button>
       </div>
+      </form>
       </Container>
       )}};
       

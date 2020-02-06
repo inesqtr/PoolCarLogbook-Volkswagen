@@ -1,12 +1,21 @@
 
-.form{
+form{
     align-self: center;
     align-items: center;
-    max-width: 50%;
 }
 
 .obs-textbox{
     width: 90%;
-    max-width: 350px;
-    margin: 0 auto;
+    margin: 10px;
+}
+
+label{
+    margin: 10px;
+    max-width: 100%;
+}
+
+input{
+    margin: 10px;
+    max-width: 100%;
+
 }
