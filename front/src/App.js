@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-
 import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
@@ -33,27 +32,23 @@ class App extends Component {
       <div className="App">
         <button><Link
           to="/book">
-          /Book</Link>
+          Book a Trip</Link>
         </button>
         <h1>Pool Car Log Book</h1>
         <Route
           exact
           path="/"
           render={() => (
-            <>
-              <TripsList
-                trips={trips}
-              />
-            </>
+            <TripsList
+              trips={trips}
+            />
           )}
         />
         <Route
           exact
           path="/book"
           render={() => (
-            <>
-              <Booking />
-            </>
+            <Booking />
           )}
         />
         <Route path='/trips/:id' render={(routerProps) => <EditTrip trip={routerProps.location.state} />} />
