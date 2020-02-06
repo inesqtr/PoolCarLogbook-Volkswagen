@@ -20,22 +20,22 @@ import { Container } from 'react-bootstrap';
 
 //  {showCheckboxAndDelete()}
 //  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
-  
+
 class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "", 
+      name: "",
       date: "",
       time_start: "",
       time_finish: "",
-      kms_start:"",
-      kms_finish:"",
+      kms_start: "",
+      kms_finish: "",
       location_start: "Rato",
       location_destination: "",
       observations: "",
       is_finished: 0,
-      car_id:1,
+      car_id: 1,
       licence_plate: "72-VZ-96",
     };
   }
@@ -64,7 +64,7 @@ class Form extends Component {
       [e.target.name]: e.target.value
     })
   }
-  
+
   postForm = () => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/create`, {
       method: "POST",
@@ -85,68 +85,79 @@ class Form extends Component {
         "car_id": +this.state.car_id,
       })
     }).then(res => {
-      
-      if(res.status=== 200) {
+
+      if (res.status === 200) {
         this.props.history.push("/")
       }
     });
   };
 
+  showCheckboxAndDelete = () => {
+    if (!this.props.isNew && this.state.is_finished) return '';
+    if (!this.props.isNew) return <div>I've finished the trip</div>;
+  }
+
+  hideSubmitButton = () => {
+    if (!this.props.isNew && this.state.is_finished) return true;
+  }
+
   render() {
-    return(
+    const { name } = this.state;
+
+    return (
       <Container>
-      <form className="col-md-6 offset-md-3">
-      <label>
-      Name:
-      </label>
-      <input
-      type="text"
-      name="name"
-      value={this.state.name}
-      onChange={this.onChange}
-      />
-      
-      <div>
-      <label>
-      Date:
-      <input
-      type="date"
-      name="date"
-      min="2010-01-01"
-      max="2049-12-31"
-      pattern="\d{4}-\d{2}-\d{2}" // unsuported browsers fallback
-      required
-      onChange={this.onChange}
-      />
-      </label>
-      </div>
-      
-      <div>
-      <label>
-      Time start:
-      <input
-      type="time"
-      name="time_start"
-      pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
-      required
-      onChange={this.onChange}
-      />
-      </label>
-      </div>
-      <div>
-      <label>
-      Time finish:
-      <input
-      type="time"
-      name="time_finish"
-      pattern="[0-9]{2}:[0-9]{2}"
-      required
-      onChange={this.onChange}
-      />
-      </label>
-      </div>
-      
-      {/* <div>
+        <form className="col-md-6 offset-md-3">
+          <label>
+            Name:
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.onChange}
+          />
+
+          <div>
+            <label>
+              Date:
+              <input
+                type="date"
+                name="date"
+                min="2010-01-01"
+                max="2049-12-31"
+                pattern="\d{4}-\d{2}-\d{2}" // unsuported browsers fallback
+                required
+                onChange={this.onChange}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label>
+              Time start:
+              <input
+                type="time"
+                name="time_start"
+                pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
+                required
+                onChange={this.onChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Time finish:
+              <input
+                type="time"
+                name="time_finish"
+                pattern="[0-9]{2}:[0-9]{2}"
+                required
+                onChange={this.onChange}
+              />
+            </label>
+          </div>
+
+          {/* <div>
       <label>
       Car:
       <Select
@@ -203,16 +214,17 @@ class Form extends Component {
       />
       </label>
       </div>
-      
+  
+      <div>{this.showCheckboxAndDelete()}</div>
+
       <div>
-      <button
-      onClick={this.postForm}>
-      Save
-      </button>
+        {this.hideSubmitButton() ? '' : <button onClick={this.postForm}>Save</button>}
       </div>
       </form>
       </Container>
-      )}};
-      
-      export default withRouter(Form);
+    )
+  }
+};
+
+export default withRouter(Form);
 

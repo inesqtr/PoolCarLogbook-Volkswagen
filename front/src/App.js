@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Link, withRouter } from 'react-router-dom';
-
-
 import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
+
+import Calendar from './Calendar';
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +46,7 @@ class App extends Component {
           Book</Link>
         </button>
         <h1>Pool Car Log Book</h1>
+          <Calendar/>
         <Route
           exact
           path="/"
@@ -63,11 +64,9 @@ class App extends Component {
           exact
           path="/booking"
           render={() => (
-            <>
-              <Booking 
-                isNew={isNew}
-              />
-            </>
+            <Booking
+              isNew={isNew}
+            />
           )}
         />
         <Route 
