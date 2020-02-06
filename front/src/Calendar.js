@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-// import moment from 'moment';
 import { ReactAgenda, Modal } from 'react-agenda';
+import { BrowserRouter } from 'react-router-dom';
 
 import Booking from './Booking/Booking';
-
-var now = new Date();
-
-require('moment/locale/fr.js');
-    var colors= {
-      'color-1':"rgba(102, 195, 131 , 1)" ,
-      "color-2":"rgba(242, 177, 52, 1)" ,
-      "color-3":"rgba(235, 85, 59, 1)" ,
-      "color-4":"rgba(70, 159, 213, 1)",
-      "color-5":"rgba(170, 59, 123, 1)"
-    }
+import './Calendar.css';
 
 
+const now = new Date();
+
+require('moment/locale/en-gb.js');
+
+var colors= {
+  'color-1':"rgba(102, 195, 131 , 1)" ,
+  "color-2":"rgba(242, 177, 52, 1)" ,
+  "color-3":"rgba(235, 85, 59, 1)" ,
+  "color-4":"rgba(70, 159, 213, 1)",
+  "color-5":"rgba(170, 59, 123, 1)"
+}
+
+// For testing proposes
 var items = [
   {
    _id            : 1,
@@ -114,6 +117,7 @@ export default class Calendar extends Component {
   }
 
   _closeModal = (e) => {
+    console.log("closing!")
     if(e){
       e.stopPropagation();
       e.preventDefault();
@@ -126,11 +130,10 @@ export default class Calendar extends Component {
   }
   
   render() {
-
     return (
 
       <section className="content-expanded "
-        style={{'padding':'0 10vw'}}
+        style={{padding:'0 10vw'}}
       >
         <ReactAgenda
           minDate={new Date(now.getFullYear(), now.getMonth()-3)}
@@ -155,12 +158,14 @@ export default class Calendar extends Component {
           onCellSelect={this.handleCellSelection.bind(this)}
         />
         {
-        this.state.showModal && 
-          <div>
+
+        this.state.showModal ? 
             <Modal clickOutside={this._closeModal} >
-              <Booking />
-            </Modal>
-          </div>
+              <BrowserRouter>
+                <Booking isNew={this.props.isNew}/>
+              </BrowserRouter>
+            </Modal> 
+            : ''
         }
        </section>
 
