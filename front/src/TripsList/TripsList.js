@@ -3,7 +3,7 @@ import Trip from '../Trip/Trip';
 import Calendar from '../Calendar';
 import './TripList.css';
 
-const TripsList = ({ trips, handleSelectTrip }) => {
+const TripsList = ({ isNew, trips, handleSelectTrip }) => {
   return (
     <>
       <Calendar
@@ -28,6 +28,7 @@ const TripsList = ({ trips, handleSelectTrip }) => {
         />
       ))}
     </table>
+    </>
   )
 };
 
