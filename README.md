@@ -34,11 +34,19 @@ Mobile-friendly app with the ability to schedule a car and see past trips.
 
 1. Create a .env file with the following environment variables:
 
-    JAWSDB_URL=mysql://[YourUsername]:[YourPassword]@localhost/hackathonvw?multipleStatements=true
+    JAWSDB_URL=mysql://[YourUsername]:[YourPassword]@localhost/[DatabaseName]?multipleStatements=true
 
-2. 
+2. Setting up mysql on terminal:
 
-3. To run locally do: 
+    - create your database
+
+    - yarn db:create
+
+    - yarn db:seed
+
+    - yarn db:drop (if you want to drop tables on database)
+
+3. To run app locally do: 
 
     yarn dev
 
