@@ -24,6 +24,25 @@ class Form extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.selectedTrip) {
+      console.log('hey from form', this.props.selectedTrip)
+      this.setState({
+        name: this.props.selectedTrip.driver,
+        date: this.props.selectedTrip.date,
+        time_start: this.props.selectedTrip.time_start,
+        time_finish: this.props.selectedTrip.time_finish,
+        kms_start: this.props.selectedTrip.kms_start,
+        kms_finish: this.props.selectedTrip.time_finish,
+        location_start: this.props.selectedTrip.location_start,
+        location_destination: this.props.selectedTrip.time_destination,
+        observations: this.props.selectedTrip.observations,
+        is_finished: this.props.selectedTrip.is_finished,
+        car_id: this.props.selectedTrip.car_id,
+      })
+    }
+  }
+
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -161,6 +180,7 @@ class Form extends Component {
                 name="kms_start"
                 type="number"
                 onChange={this.onChange}
+                value={this.state.kms_start}
               />
             </label>
           </div>
@@ -171,6 +191,7 @@ class Form extends Component {
                 name="kms_finish"
                 type="number"
                 onChange={this.onChange}
+                value={this.state.kms_finish}
               />
             </label>
           </div>
@@ -182,6 +203,7 @@ class Form extends Component {
                 name="location_destination"
                 type="text"
                 onChange={this.onChange}
+                value={this.state.location_destination}
               />
             </label>
           </div>
@@ -193,9 +215,11 @@ class Form extends Component {
                 name="observations"
                 className="obs-textbox"
                 onChange={this.onChange}
+                value={this.state.observations}
               />
             </label>
           </div>
+
           {this.showCheckbox()}
           {this.hideSubmitButton()}
           {this.hideDeleteButton()}

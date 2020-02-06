@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
-const Trip = ({ trip }) => {
+const Trip = ({ trip, handleSelectTrip }) => {
     const buttonText = trip.is_finished ? 'See More' : 'Edit'
  
     return (
@@ -17,10 +17,12 @@ const Trip = ({ trip }) => {
                 <td>{trip.driver}</td>
                 <td>{trip.location_destination}</td>
                 <td>
-                    <button>
-                        <Link to={{ pathname: `/trips/${trip.id}`, state: trip }}>
+                    <button
+                    onClick={()=> handleSelectTrip(trip)}>
+                        {/* <Link to={{ pathname: `/trips/${trip.id}`, state: trip }}>
+                        </Link> */}
+
                             {buttonText}
-                        </Link>
                     </button>
                 </td>
             </tr>
