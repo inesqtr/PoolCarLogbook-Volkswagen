@@ -125,6 +125,9 @@ class App extends Component {
                 trips={trips}
                 selectedTrip={selectedTrip}
                 handleSelectTrip={this.handleSelectTrip}
+                isNew={isNew}
+                postTrip={this.postTrip}
+                onChange={this.onChange}
               />
             </>
           )}
