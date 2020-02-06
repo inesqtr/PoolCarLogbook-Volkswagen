@@ -4,88 +4,104 @@ import Select from 'react-select';
 
 const car = [{ licence_plate: '97-OZ-56' }, { licence_plate: '32-LW-35' }];
 
-const Form = () => (
-  <div className="form">
-    <div>
-      <label className="form">
-            Name:
-          />
-      </label>
-    </div>
 
-    <div>
-      <label className="form">
-            Date:
-        <input
-          type="date"
-          name="date"
-          min="2010-01-01"
-          max="2049-12-31"
-          pattern="\d{4}-\d{2}-\d{2}" // unsuported browsers fallback
-          required
-          />
-      </label>
-    </div>
+const Form = ({ isNew, trip }) => {
+  const showCheckboxAndDelete = () => {
+    if (!isNew && trip.is_finished) return '';
+    if (!isNew) return <div>I've finished the trip</div>;
 
-    <div>
-      <label>
-            Time start:
-        <input
-          type="time"
-          name="time_start"
-          pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
-          required
-          />
-      </label>
-    </div>
-    <div>
-      <label>
-            Time finish:
-        <input
-          type="time"
-          name="time_finish"
-          pattern="[0-9]{2}:[0-9]{2}"
-          required
-          />
-      </label>
-    </div>
+  }
 
-    <div>
-      <label>
-            Car:
+  const hideSubmitButton = () => {
+    if (!isNew && trip.is_finished) return true;
+  }
+
+
+  return (
+    <form className="form" >
+      <div>
+        <label className="form">
+          Name:
+        />
+      </label>
+      </div>
+
+      <div>
+        <label className="form">
+          Date:
+        <input
+            type="date"
+            name="date"
+            min="2010-01-01"
+            max="2049-12-31"
+            pattern="\d{4}-\d{2}-\d{2}" // unsuported browsers fallback
+            required
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Time start:
+        <input
+            type="time"
+            name="time_start"
+            pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Time finish:
+        <input
+            type="time"
+            name="time_finish"
+            pattern="[0-9]{2}:[0-9]{2}"
+            required
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Car:
         <Select
-          classNamePrefix="select"
-          options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
+            classNamePrefix="select"
+            options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
           />
-      </label>
-    </div>
+        </label>
+      </div>
 
-    <div>
-      <label>
-            Kms:
+      <div>
+        <label>
+          Kms:
         <input
-          type="text"
+            type="text"
           />
-      </label>
-    </div>
+        </label>
+      </div>
 
-    <div>
-      <label>
-            Destination:
+      <div>
+        <label>
+          Destination:
         <input
-          type="text"
+            type="text"
           />
-      </label>
-    </div>
+        </label>
+      </div>
 
-    <div>
-      <label>
-            Observations:
+      <div>
+        <label>
+          Observations:
         <textarea
-          className="obs-textbox"
+            className="obs-textbox"
           />
-      </label>
-    </div>
-  </div>
-);
+        </label>
+      </div>
+      {showCheckboxAndDelete()}
+      {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
+    </form >
+  );
+}
 export default Form;
