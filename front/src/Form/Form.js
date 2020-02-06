@@ -4,6 +4,21 @@ import Select from 'react-select';
 import { withRouter } from 'react-router-dom'
 
 
+// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
+//  const Form = ({ isNew, trip }) => {
+//  const showCheckboxAndDelete = () => {
+//    if (!isNew && trip.is_finished) return '';
+//    if (!isNew) return <div>I've finished the trip</div>;
+//
+//  }
+
+//  const hideSubmitButton = () => {
+//    if (!isNew && trip.is_finished) return true;
+//  }
+
+//  {showCheckboxAndDelete()}
+//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
+  
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -179,4 +194,4 @@ class Form extends Component {
       )}};
       
       export default withRouter(Form);
-      
+

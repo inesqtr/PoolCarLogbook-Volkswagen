@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 
 const Trip = ({ trip }) => {
     const buttonText = trip.is_finished ? 'See More' : 'Edit'
-    console.log(trip)
+ 
     return (
         <tbody>
             <tr>
