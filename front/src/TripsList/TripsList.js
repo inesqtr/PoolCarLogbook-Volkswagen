@@ -5,25 +5,20 @@ import Calendar from '../Calendar';
 import './TripList.css';
 
 
-// handleBest = () => {
-//   const filtered = this.state.games.filter(best => best.rating > 4.5)
-//   this.setState({ 
-//     bestGames: filtered,
-//     showAll: !this.state.showAll
-//   })
-// }
-
-{/* <button onClick={this.handleBest}>{buttonText}</button> */ }
-
-const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip }) => {
+const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
   const tripsList = isFiltered ? tripsByDriver : trips
   const options = trips.map((trip) => ({ value: trip.driver, label: trip.driver }));
   
+
   return (
     <>
       <Calendar
         isNew={isNew}
         trips={trips}
+        selectedTrip={selectedTrip}
+        handleSelectTrip={handleSelectTrip}
+        postTrip={postTrip}
+        onChange={onChange}
       />
 
       <div>
