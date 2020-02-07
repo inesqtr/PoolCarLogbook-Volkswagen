@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 import './Form.css';
 
@@ -20,7 +20,7 @@ class Form extends Component {
       observations: "",
       is_finished: 0,
       car_id: 1,
-      licence_plate: "72-VZ-96",
+      licence_plate: "",
       id: "",
       newTrip: {}
     };
@@ -48,6 +48,23 @@ class Form extends Component {
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
+
+  onChangeSelect = (e) => {
+    this.setState({
+      licence_plate: e.value,
+    })
+  }
+  
+  selectOptions = () => { 
+    this.props.trips
+  .reduce((acc, curr) => [
+    ...acc, 
+    acc.includes(curr.licence_plate) ? null : curr.licence_plate
+  ],
+    []
+  )
+  .map(
+    acc => ({ value: acc.licence_plate, label: acc.licence_plate }))};
 
   //link to itinerary map
   seeTripItinerary = () => {
@@ -194,11 +211,26 @@ class Form extends Component {
       <label>
       Car:
       </label>
-      {/* <Select
+      <Select
       classNamePrefix="select"
-      options={this.state.car_id}
-      onChange={this.onChange}
-      /> */}
+      name="licence_plate"
+      options={this.props.trips.reduce((acc, curr) => {
+        if (acc.includes(curr.licence_plate)) {
+          return acc;
+        } 
+        return [
+          ...acc,
+          curr.licence_plate
+        ]
+      }
+        ,
+        []
+      )
+        .map(
+          item => ({ value: item, label: item}))
+      }
+      onChange={this.onChangeSelect}
+      />
       </div>
           <div>
             <label>
