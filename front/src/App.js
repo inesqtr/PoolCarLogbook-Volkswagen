@@ -5,7 +5,7 @@ import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
 import logo from './assets/images/vwds_rgb.png';
-
+import AggregatedKmMonth from './AggregatedKmMonth';
 import Calendar from './Calendar';
 
 
@@ -19,8 +19,15 @@ class App extends Component {
       tripsForCalendar: [],
       isNew: true,
       isFiltered: false,
+      kmMonth: 0
     };
   }
+
+  componentDidMount() {
+    this.getAllTrips()
+    this.getAggregatedKmMonth()
+  };
+
 
   //fetch to get all info from database
   getAllTrips = () => {
@@ -33,7 +40,7 @@ class App extends Component {
             name: trip.driver,
             startDateTime: new Date(trip.date.split('00:00:00').join(trip.time_start)),
             endDateTime: new Date(trip.date.split('00:00:00').join(trip.time_finish)),
-            classes: 'color-1'
+            classes: 'color-VWpetrollight'
           }
         ))
         this.setState(state => ({
@@ -43,10 +50,17 @@ class App extends Component {
         }));
       })
   }
+  getAggregatedKmMonth = () => {
+    return fetch(`${process.env.REACT_APP_SERVER_URL}/trip/kmmonth`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(state => ({
+          ...state,
+          kmMonth: data.aggregatedKmMonth
+        }));
+      })
+  }
 
-  componentDidMount() {
-    this.getAllTrips()
-  };
 
   //fetch to post booking info (create on database) 
   postTrip = (newTrip) => {
@@ -114,6 +128,7 @@ class App extends Component {
 
   //fetch to delete booking info
   deleteTrip = (newTrip) => {
+    console.log('delete hey')
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
       method: "DELETE",
       headers: new Headers({
@@ -152,7 +167,7 @@ class App extends Component {
 
 
   render() {
-    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
+    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered, kmMonth } = this.state;
     return (
       <div className="App">
         <header>
@@ -176,6 +191,12 @@ class App extends Component {
         </div>
 
 
+        <button>
+          <Link to="/kmmonth">
+            Aggregated Data
+          </Link>
+        </button>
+
         <Switch>
           <Route
             exact path="/"
@@ -186,6 +207,8 @@ class App extends Component {
                 trips={trips}
                 handleSelectTrip={this.state.handleSelectTrip}
                 editTrip={this.editTrip}
+                postTrip={this.postTrip}
+                deleteTrip={this.deleteTrip}
               />
             )}
           />
@@ -205,6 +228,7 @@ class App extends Component {
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
+                deleteTrip={this.deleteTrip}
               />
             )}
           />
@@ -217,6 +241,16 @@ class App extends Component {
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
+                trips={trips}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/kmmonth"
+            render={() => (
+              <AggregatedKmMonth
+                kmMonth={kmMonth}
               />
             )}
           />
@@ -225,7 +259,8 @@ class App extends Component {
             path='/trips/:id'
             render={(routerProps) =>
               <EditTrip
-                trip={routerProps.location.state}
+                // trip={routerProps.location.state}
+                trips={trips}
                 isNew={isNew}
                 selectedTrip={selectedTrip}
                 editTrip={this.editTrip}

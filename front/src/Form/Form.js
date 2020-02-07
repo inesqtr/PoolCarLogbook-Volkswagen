@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 import './Form.css';
 
@@ -20,7 +20,7 @@ class Form extends Component {
       observations: "",
       is_finished: 0,
       car_id: 1,
-      licence_plate: "72-VZ-96",
+      licence_plate: "",
       id: "",
       newTrip: {}
     };
@@ -30,7 +30,7 @@ class Form extends Component {
     if (this.props.selectedTrip) {
       this.setState({
         name: this.props.selectedTrip.driver,
-        date: this.props.selectedTrip.date,
+        date: this.props.selectedTrip.date.split('T')[0],
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
         kms_start: this.props.selectedTrip.kms_start,
@@ -40,13 +40,27 @@ class Form extends Component {
         observations: this.props.selectedTrip.observations,
         is_finished: this.props.selectedTrip.is_finished,
         car_id: this.props.selectedTrip.car_id,
+        licence_plate: this.props.selectedTrip.licence_plate,
         id: this.props.selectedTrip.id,
       })
+    } else if (this.props.selectedDateTime) {
+      // if booking from Calendar click, prefill date and start time inputs
+      this.setState({
+        date: this.props.selectedDateTime[0][0],
+        time_start: this.props.selectedDateTime[0][1],
+      })
+      
     }
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onChangeSelect = (e) => {
+    this.setState({
+      licence_plate: e.value,
+    })
   }
 
   //link to itinerary map
@@ -67,15 +81,19 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!this.props.selectedTrip.is_finished}
+          value={this.state.is_finished}
           id="checkbox"
           name="is_finished"
           type="checkbox"
-          onChange={this.onChange} />
+          onChange={this.onChangeCheckbox} />
       </div>
     }
   }
 
+
+  onChangeCheckbox = () => {
+    this.setState({is_finished: 1})
+  }
   //show delete button if trip is not finished
   hideDeleteButton = () => {
     if (this.props.isNew) return '';
@@ -119,8 +137,16 @@ class Form extends Component {
     const { editTrip } = this.props;
     this.saveNewTrip(() => editTrip(this.state.newTrip))
   }
+  
+  handleSubmitDelete = (e) => {
+    e.preventDefault();
+    const { deleteTrip } = this.props;
+    this.saveNewTrip(() => deleteTrip(this.state.newTrip))
+
+  }
 
   render() {
+
     const { name,
       date,
       time_start,
@@ -129,6 +155,7 @@ class Form extends Component {
       kms_finish,
       location_destination,
       observations,
+      licence_plate,
     } = this.state;
     return (
       <Container>
@@ -194,11 +221,26 @@ class Form extends Component {
       <label>
       Car:
       </label>
-      {/* <Select
+      <Select
       classNamePrefix="select"
-      options={this.state.car_id}
-      onChange={this.onChange}
-      /> */}
+      name="licence_plate"
+      options={this.props.trips.reduce((acc, curr) => {
+        if (acc.includes(curr.licence_plate)) {
+          return acc;
+        } 
+        return [
+          ...acc,
+          curr.licence_plate
+        ]
+      }
+        ,
+        []
+      )
+        .map(
+          item => ({ value: item, label: item}))
+      }
+      onChange={this.onChangeSelect}
+      />
       </div>
           <div>
             <label>
