@@ -49,6 +49,7 @@ class App extends Component {
 
   //fetch to post booking info (create on database) 
   postTrip = (newTrip) => {
+    console.log('from post trip in app', newTrip)
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/create`, {
       method: "POST",
       headers: new Headers({

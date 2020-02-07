@@ -60,14 +60,14 @@ class Form extends Component {
   //render checkbox if trip is not finished
   showCheckbox = () => {
     if (this.props.isNew) return '';
-    if (!this.props.isNew && this.props.trip.is_finished) return '';
+    if (!this.props.isNew && this.props.selectedTrip.is_finished) return '';
     if (!this.props.isNew) {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!this.props.trip.is_finished}
+          value={!this.props.selectedTrip.is_finished}
           id="checkbox"
-          name="checkedFinish"
+          name="is_finished"
           type="checkbox"
           onChange={this.onChange} />
       </div>
@@ -83,57 +83,40 @@ class Form extends Component {
 
   //show save/edit/none button if booking/editing/finished trip
   hideSubmitButton = () => {
-    if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
+    if (this.props.isNew) return <button onClick={this.handleSubmitNew}>Save</button>
     if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
-    return <button onClick={this.handleSubmit}>Edit</button>
+    return <button onClick={this.handleSubmitEdit}>Save changes</button>
   }
 
-  handleSubmit = (e) => {
+  saveNewTrip = (afterStateSaved) => {
+    const newT = {
+      name: this.state.name, 
+      date : this.state.date, 
+      time_start: this.state.time_start, 
+      time_finish: this.state.time_finish, 
+      kms_start: this.state.kms_start,
+      kms_finish: this.state.kms_finish,
+      location_start: this.state.location_start,
+      location_destination: this.state.location_destination,
+      observations: this.state.observations,
+      is_finished: this.state.is_finished,
+      car_id: this.state.car_id
+    }
+    this.setState({ newTrip: newT}, afterStateSaved);
+  }
+  
+  handleSubmitNew = (e) => {
     e.preventDefault();
-    const { selectedTrip, editTrip, postTrip } = this.props;
-
-    const { name,
-      date,
-      time_start,
-      time_finish,
-      kms_start,
-      kms_finish,
-      location_start,
-      location_destination,
-      observations,
-      is_finished,
-      car_id,
-      newTrip } = this.state
-
-
-    this.setState(() => {
-      const newT = {
-        name,
-        date,
-        time_start,
-        time_finish,
-        kms_start,
-        kms_finish,
-        location_start,
-        location_destination,
-        observations,
-        is_finished,
-        car_id
-      }
-
-      return { newTrip: newT }
-    },
-      () => {
-
-        if (selectedTrip && selectedTrip.id) {
-          editTrip(newTrip)
-        } else {
-          postTrip(newTrip)
-        }
-      }
-    )
+    const { postTrip } = this.props;
+    this.saveNewTrip(() => postTrip(this.state.newTrip))
   }
 
+  handleSubmitEdit = (e) => {
+    e.preventDefault();
+    const { editTrip } = this.props;
+    this.saveNewTrip(() => editTrip(this.state.newTrip))
+  }
+  
   render() {
     const { name,
       date,
@@ -141,11 +124,8 @@ class Form extends Component {
       time_finish,
       kms_start,
       kms_finish,
-      location_start,
       location_destination,
       observations,
-      is_finished,
-      car_id
     } = this.state;
     return (
       <Container>
@@ -266,7 +246,7 @@ class Form extends Component {
             </label>
           </div>
 
-          {/* {this.showCheckbox()} */}
+          {this.showCheckbox()}
           {this.hideSubmitButton()}
           {this.hideDeleteButton()}
         </form>
