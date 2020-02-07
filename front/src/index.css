@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@font-face {
+  font-family: 'VWAGTheSans-Bold';
+  src: url(assets/fonts/VWAGTheSans-Bold.otf) format('otf');
+}
+
+@font-face {
+  font-family: 'VWAGTheSans-Italic';
+  src: url(assets/fonts/VWAGTheSans-Italic.otf) format('otf');
+}
+
+@font-face {
+  font-family: 'VWAGTheSans-Light';
+  src: url(assets/fonts/VWAGTheSans-Light.otf) format('otf');
+}
+
+@font-face {
+  font-family: 'VWAGTheSans-Regular';
+  src: url(assets/fonts/VWAGTheSans-Regular.otf) format('otf');
+}

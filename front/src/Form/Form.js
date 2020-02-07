@@ -51,7 +51,7 @@ class Form extends Component {
   seeTripItinerary = () => {
     if (this.props.isNew) return '';
     return <div>
-      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
+      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.selectedTrip.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
         See trip itinerary
       </a>
     </div>
@@ -90,10 +90,10 @@ class Form extends Component {
 
   saveNewTrip = (afterStateSaved) => {
     const newT = {
-      name: this.state.name, 
-      date : this.state.date, 
-      time_start: this.state.time_start, 
-      time_finish: this.state.time_finish, 
+      name: this.state.name,
+      date: this.state.date,
+      time_start: this.state.time_start,
+      time_finish: this.state.time_finish,
       kms_start: this.state.kms_start,
       kms_finish: this.state.kms_finish,
       location_start: this.state.location_start,
@@ -102,9 +102,9 @@ class Form extends Component {
       is_finished: this.state.is_finished,
       car_id: this.state.car_id
     }
-    this.setState({ newTrip: newT}, afterStateSaved);
+    this.setState({ newTrip: newT }, afterStateSaved);
   }
-  
+
   handleSubmitNew = (e) => {
     e.preventDefault();
     const { postTrip } = this.props;
@@ -116,7 +116,7 @@ class Form extends Component {
     const { editTrip } = this.props;
     this.saveNewTrip(() => editTrip(this.state.newTrip))
   }
-  
+
   render() {
     const { name,
       date,
