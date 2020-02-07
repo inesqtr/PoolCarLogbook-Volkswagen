@@ -100,7 +100,7 @@ class Form extends Component {
     return <button onClick={this.handleSubmitEdit}>Save changes</button>
   }
 
-  saveNewTrip = (afterStateSaved) => {
+  saveNewTrip = (aftersetState) => {
     const newT = {
       name: this.state.name, 
       date : this.state.date, 
@@ -114,7 +114,7 @@ class Form extends Component {
       is_finished: this.state.is_finished,
       car_id: this.state.car_id
     }
-    this.setState({ newTrip: newT}, afterStateSaved);
+    this.setState({ newTrip: newT}, aftersetState);
   }
   
   handleSubmitNew = (e) => {
