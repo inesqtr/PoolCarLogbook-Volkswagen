@@ -25,8 +25,8 @@ class Form extends Component {
     };
   }
 
-  componentDidMount(){
-    if(this.props.selectedTrip){
+  componentDidMount() {
+    if (this.props.selectedTrip) {
       this.setState({
         name: this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
@@ -45,8 +45,17 @@ class Form extends Component {
 
   onChange = (e) => {
     this.setState(
-      {[e.target.name]: e.target.value}
+      { [e.target.name]: e.target.value }
     )
+  }
+
+  seeTripItinerary = () => {
+    if (this.props.isNew) return '';
+    return <div>
+      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
+        See trip itinerary
+      </a>
+    </div>
   }
 
   showCheckbox = () => {
@@ -56,6 +65,7 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
+          value={!is_finished}
           id="checkbox"
           name="checkedFinish"
           type="checkbox"
@@ -69,71 +79,74 @@ class Form extends Component {
     if (!this.props.isNew && this.props.trip.is_finished) return ''
     return <button>Delete</button>
   }
-  
+
   hideSubmitButton = () => {
     if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
     if (!this.props.isNew && this.props.trip.is_finished) return ''
     return <button onClick={this.handleSubmit}>Edit</button>
   }
-  
+
   handleSubmit = (e) => {
     e.preventDefault();
-    const {selectedTrip, editTrip, postTrip } = this.props;
-    
-    const {name, 
-      date, 
-      time_start, 
-      time_finish, 
-      kms_start, 
-      kms_finish, 
-      location_start, 
-      location_destination, 
-      observations, 
-      is_finished, 
-      car_id, 
+    const { selectedTrip, editTrip, postTrip } = this.props;
+
+    const { name,
+      date,
+      time_start,
+      time_finish,
+      kms_start,
+      kms_finish,
+      location_start,
+      location_destination,
+      observations,
+      is_finished,
+      car_id,
       newTrip } = this.state
 
-      
-      this.setState( () => {
-        
-        const newT = { name, 
-          date, 
-          time_start, 
-          time_finish, 
-          kms_start, 
-          kms_finish, 
-          location_start, 
-          location_destination, 
-          observations, 
-          is_finished, 
-          car_id}
 
-        return { newTrip: newT }}, 
-        () => {
-          
-          if(selectedTrip && selectedTrip.id){
-            editTrip(newTrip)
-          }else{
-        postTrip(newTrip)
-      }}
-      )
+    this.setState(() => {
+      const newT = {
+        name,
+        date,
+        time_start,
+        time_finish,
+        kms_start,
+        kms_finish,
+        location_start,
+        location_destination,
+        observations,
+        is_finished,
+        car_id
+      }
+
+      return { newTrip: newT }
+    },
+      () => {
+
+        if (selectedTrip && selectedTrip.id) {
+          editTrip(newTrip)
+        } else {
+          postTrip(newTrip)
+        }
+      }
+    )
   }
 
 
   render() {
-    const { name, 
-            date, 
-            time_start, 
-            time_finish, 
-            kms_start, 
-            kms_finish, 
-            location_start, 
-            location_destination, 
-            observations, 
-            is_finished, 
-            car_id 
-          } = this.state;
-
+    const { name,
+      date,
+      time_start,
+      time_finish,
+      kms_start,
+      kms_finish,
+      location_start,
+      location_destination,
+      observations,
+      is_finished,
+      car_id
+    } = this.state;
+    console.log(this.state)
     return (
       <Container>
         <form className="col-md-6 offset-md-3">
@@ -204,7 +217,19 @@ class Form extends Component {
       />
       </label>
       </div> */}
+          <div>
+            <label>
+              Destination:
+              <input
+                name="location_destination"
+                type="text"
+                onChange={this.onChange}
+                value={location_destination}
+              />
+            </label>
+          </div>
 
+          {this.seeTripItinerary()}
 
           <div>
             <label>
@@ -229,17 +254,7 @@ class Form extends Component {
             </label>
           </div>
 
-          <div>
-            <label>
-              Destination:
-              <input
-                name="location_destination"
-                type="text"
-                onChange={this.onChange}
-                value={location_destination}
-              />
-            </label>
-          </div>
+
 
           <div>
             <label>
