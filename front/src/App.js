@@ -4,6 +4,7 @@ import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
+import logo from './assets/images/vwds_rgb.png';
 
 import Calendar from './Calendar';
 
@@ -154,18 +155,26 @@ class App extends Component {
     const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
     return (
       <div className="App">
-        <h1>Pool Car Log Book</h1>
-        <button>
-          <Link to="/booking">
-            Book
-          </Link>
-        </button>
+        <header>
+          <img src={logo} alt="logo" />
 
-        <button>
-          <Link to="/tripslist">
-            See All Trips
+        </header>
+        <h1>POOL CAR LOGBOOK</h1>
+
+        <div className="home-buttons">
+          <Link to="/booking">
+            <button>
+              Book
+            </button>
           </Link>
-        </button>
+
+          <Link to="/tripslist">
+            <button>
+              See All Trips
+            </button>
+          </Link>
+        </div>
+
 
         <Switch>
           <Route
@@ -211,7 +220,7 @@ class App extends Component {
               />
             )}
           />
-          
+
           <Route
             path='/trips/:id'
             render={(routerProps) =>

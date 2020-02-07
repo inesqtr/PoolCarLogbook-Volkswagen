@@ -52,7 +52,7 @@ class Form extends Component {
   //link to itinerary map
   seeTripItinerary = () => {
     if (this.props.isNew) return '';
-    return <div>
+    return <div className="itinerary">
       <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.selectedTrip.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
         See trip itinerary
       </a>

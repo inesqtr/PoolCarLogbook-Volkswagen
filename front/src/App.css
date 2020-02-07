@@ -17,10 +17,111 @@
 
 .App {
   text-align: center;
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  padding-top: 30px;
+  width: 90vw;
+}
+
+header{
+  display:flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-bottom: 5vh;
+}
+
+header img{
+    height: 5vh;
+    width: auto;
+}
+
+h1{
+  font-family: 'VWAGTheSans-Light';
+  font-size: 3.5vh;
+  text-align: right;
+  border-right: solid 5px var(--reddark);
+  border-bottom: solid 2px var(--reddark);
+  padding-right: 2vw;
+}
+
+h2{
   font-family: 'VWAGTheSans-Bold';
+  font-size: 3.5vh;
+  border-bottom: solid 2px var(--reddark);
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  font-weight: 600;
+}
+
+.home-buttons{
+  padding-top: 5vh;
+  display: flex;
+  justify-content: flex-end;
+}
+
+button{
+  background-color: var(--reddark) ;
+  border: solid 2px var(--reddark);
+  box-shadow: none;
+  padding: 6px 12px;
+  margin:1vw;
+  color: white;
+  font-family: 'VWAGTheSans-Bold';
+  font-size: 2vh;
+}
+
+button:hover{
+  background-color: var(--white) ;
+  border: solid 2px var(--reddark) ;
+  box-shadow: none;
+  margin:1vw;
+  color:var(--petrol);
+}
+
+button:focus{
+  background-color: var(--white) ;
+  border: solid 2px var(--reddark) ;
+  color:var(--petrol);
+  box-shadow: none;
+  outline: transparent;
+}
+
+.backButton{
+  display:flex;
+  background-color: transparent;
+  border:none;
+  color:var(--petrol);
+  font-size: 3vh;
+  font-family: 'VWAGTheSans-Light';
+  width: 30vw;
+  font-size:2vh;
+  justify-content: right;
 }
 
 
+a{
+  color: white;
+  font-family: 'VWAGTheSans-Bold';
+  font-size: 2vh;
+}
+
+a:hover{
+  text-decoration: none;
+  color:var(--petrol);
+}
+
+@media screen and (min-width: 740px) {
+  h1{
+    font-size: 7vh;
+    border-right: solid 10px var(--reddark);
+    border-bottom: solid 5px var(--reddark);
+    width: 50vw;
+    margin-left:42vw;
+  }
+
+  h2{
+    width: 60vw;
+    font-size: 5vh;
+    margin:auto;
+  }
+}
 

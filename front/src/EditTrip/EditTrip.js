@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 
 const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip }) => {
   return (
-    <div>
+    <section className="booking-page">
       <Link to="/" className='backButton'>Go Back</Link>
       <h2>Your Trip</h2>
       <Form
@@ -14,7 +14,7 @@ const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip }) => {
         editTrip={editTrip}
         deleteTrip={deleteTrip}
       />
-    </div>
+    </section>
   );
 }
 
