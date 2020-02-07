@@ -13,8 +13,11 @@ class App extends Component {
     super(props);
     this.state = {
       trips: [],
+      tripsByDriver: [],
       selectedTrip: {},
-      isNew: true, 
+      tripsForCalendar: [],
+      isNew: true,
+      isFiltered: false,
     };
   }
 
@@ -22,11 +25,21 @@ class App extends Component {
     return fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
     .then(response => response.json())
     .then(data => {
-      this.setState({
-        trips: data.allTrips
-      });
-    }
-    )
+      const caltrips = data.allTrips.map( trip => (
+          {
+            _id           : trip.id,
+            name          : trip.driver,
+            startDateTime : new Date(trip.date.split('00:00:00').join(trip.time_start)),
+            endDateTime   : new Date(trip.date.split('00:00:00').join(trip.time_finish)),
+            classes       : 'color-1'
+          }
+        ))
+        this.setState(state => ({
+          ...state,
+          trips: data.allTrips,
+          tripsForCalendar: caltrips
+        }));
+      })
   } 
 
   componentDidMount() {
@@ -53,7 +66,6 @@ class App extends Component {
         "car_id": +newTrip.car_id,
       })
     }).then(res => {
-
       if (res.status === 200) {
         this.getAllTrips()
         .then(
@@ -103,9 +115,18 @@ class App extends Component {
     }, () => this.props.history.push(`/trips/${trip.id}`))
   }
 
+  filterByDriver = (e) => {
+    const checkAll = e.value === 'all' ? false : true
+    const filtered = this.state.trips.filter(trip => trip.driver === e.value);
+    this.setState({
+      tripsByDriver: filtered,
+      isFiltered:checkAll
+    })
+  }
+
 
   render() {
-    const { trips, isNew, selectedTrip } = this.state;
+    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
     return (
       <div className="App">
         <button><Link
@@ -122,9 +143,13 @@ class App extends Component {
           render={() => (
             <>
               <TripsList
+                tripsForCalendar={tripsForCalendar}
                 trips={trips}
+                tripsByDriver={tripsByDriver}
                 selectedTrip={selectedTrip}
                 handleSelectTrip={this.handleSelectTrip}
+                filterByDriver={this.filterByDriver}
+                isFiltered={isFiltered}
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
@@ -143,15 +168,15 @@ class App extends Component {
             />
           )}
         />
-        <Route 
-          path='/trips/:id' 
-          render={(routerProps) => 
-          <EditTrip 
-            trip={routerProps.location.state} 
-            isNew={isNew}
-            selectedTrip={selectedTrip}
-            editTrip={this.editTrip}
-          />}
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              trip={routerProps.location.state}
+              isNew={isNew}
+              selectedTrip={selectedTrip}
+              editTrip={this.editTrip}
+            />}
         />
       </div>
     );
