@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import { ReactAgenda, Modal } from 'react-agenda';
 import { BrowserRouter } from 'react-router-dom';
-
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip'
 import './Calendar.css';
-
 
 const now = new Date();
 
 require('moment/locale/en-gb.js');
 
 var colors= {
-  'color-1':"rgba(102, 195, 131 , 1)" ,
-  "color-2":"rgba(242, 177, 52, 1)" ,
-  "color-3":"rgba(235, 85, 59, 1)" ,
-  "color-4":"rgba(70, 159, 213, 1)",
-  "color-5":"rgba(170, 59, 123, 1)"
+  'color-VWpetrollight':"rgb(198,223,231)",
+  "color-VWred":"rgb(162,30,77)"
 }
-
-// For testing proposes
 
 export default class Calendar extends Component {
   constructor(props){
@@ -37,17 +30,15 @@ export default class Calendar extends Component {
     }
   }
 
-  
   componentDidMount() {      
     this.setState({items:this.props.tripsForCalendar});
   }
 
-  componentDidUpdate(next , last) {
+  componentDidUpdate(next) {
     if(next.items){ 
       this.setState({items:next.items});
     }
   }
-
 
   handleItemEdit = (item, openModal) => {
     if(item && openModal === true){
@@ -93,8 +84,8 @@ export default class Calendar extends Component {
           minDate={new Date(now.getFullYear(), now.getMonth()-3)}
           maxDate={new Date(now.getFullYear(), now.getMonth()+3)}
           startDate={this.state.startDate}
-          startAtTime={7}
-          endAtTime={20}
+          startAtTime={0}
+          endAtTime={24}
           cellHeight={this.state.cellHeight}
           locale="en"
           items={this.props.tripsForCalendar}
@@ -112,31 +103,29 @@ export default class Calendar extends Component {
           onCellSelect={this.handleCellSelection}
         />
         {
-        
         this.state.showModal ? 
-            <Modal clickOutside={this._closeModal} >
-              <BrowserRouter>
-                {
-                  this.state.elementToEdit ? (
-                    this.props.trips.map((trip)=>(
-                      trip.id === this.state.elementToEdit[0]._id &&
-                        <EditTrip               
-                          isNew={this.props.isNew}
-                          selectedTrip={trip}
-                          editTrip={this.editTrip}
-                          key={trip.id}
-                          />
-                    )
+          <Modal clickOutside={this._closeModal} >
+            <BrowserRouter>
+              {
+                this.state.elementToEdit ? (
+                  this.props.trips.map((trip)=>(
+                    trip.id === this.state.elementToEdit[0]._id &&
+                      <EditTrip               
+                        isNew={this.props.isNew}
+                        selectedTrip={trip}
+                        editTrip={this.editTrip}
+                        key={trip.id}
+                      />
                     )
                   )
-                  : <Booking isNew={this.props.isNew} postTrip={this.props.postTrip}/>
-                }
-              </BrowserRouter>
-            </Modal> 
-            : ''
+                )
+                : <Booking isNew={this.props.isNew} postTrip={this.props.postTrip}/>
+              }
+            </BrowserRouter>
+          </Modal> 
+          : ''
         }
        </section>
-
     );
   }
 }
