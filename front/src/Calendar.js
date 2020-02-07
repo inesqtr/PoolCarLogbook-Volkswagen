@@ -118,9 +118,11 @@ export default class Calendar extends Component {
                       <EditTrip               
                         isNew={this.props.isNew}
                         selectedTrip={trip}
-                        editTrip={this.editTrip}
+                        editTrip={this.props.editTrip}
                         key={trip.id}
                         trips={this.props.trips}
+                        postTrip={this.props.postTrip} 
+                        deleteTrip={this.props.deleteTrip}
                       />
                     )
                   )

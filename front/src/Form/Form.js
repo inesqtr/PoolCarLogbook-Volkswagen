@@ -30,7 +30,7 @@ class Form extends Component {
     if (this.props.selectedTrip) {
       this.setState({
         name: this.props.selectedTrip.driver,
-        date: this.props.selectedTrip.date,
+        date: this.props.selectedTrip.date.split('T')[0],
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
         kms_start: this.props.selectedTrip.kms_start,
@@ -40,6 +40,7 @@ class Form extends Component {
         observations: this.props.selectedTrip.observations,
         is_finished: this.props.selectedTrip.is_finished,
         car_id: this.props.selectedTrip.car_id,
+        licence_plate: this.props.selectedTrip.licence_plate,
         id: this.props.selectedTrip.id,
       })
     } else if (this.props.selectedDateTime) {
@@ -61,17 +62,6 @@ class Form extends Component {
       licence_plate: e.value,
     })
   }
-  
-  selectOptions = () => { 
-    this.props.trips
-  .reduce((acc, curr) => [
-    ...acc, 
-    acc.includes(curr.licence_plate) ? null : curr.licence_plate
-  ],
-    []
-  )
-  .map(
-    acc => ({ value: acc.licence_plate, label: acc.licence_plate }))};
 
   //link to itinerary map
   seeTripItinerary = () => {
@@ -91,15 +81,19 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!this.props.selectedTrip.is_finished}
+          value={this.state.is_finished}
           id="checkbox"
           name="is_finished"
           type="checkbox"
-          onChange={this.onChange} />
+          onChange={this.onChangeCheckbox} />
       </div>
     }
   }
 
+
+  onChangeCheckbox = () => {
+    this.setState({is_finished: 1})
+  }
   //show delete button if trip is not finished
   hideDeleteButton = () => {
     if (this.props.isNew) return '';
@@ -143,8 +137,16 @@ class Form extends Component {
     const { editTrip } = this.props;
     this.saveNewTrip(() => editTrip(this.state.newTrip))
   }
+  
+  handleSubmitDelete = (e) => {
+    e.preventDefault();
+    const { deleteTrip } = this.props;
+    this.saveNewTrip(() => deleteTrip(this.state.newTrip))
+
+  }
 
   render() {
+
     const { name,
       date,
       time_start,
@@ -153,6 +155,7 @@ class Form extends Component {
       kms_finish,
       location_destination,
       observations,
+      licence_plate,
     } = this.state;
     return (
       <Container>
