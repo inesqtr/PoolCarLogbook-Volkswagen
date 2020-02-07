@@ -161,7 +161,7 @@ class Form extends Component {
       car_id
     } = this.state;
     return (
-      // <Container>
+      <Container>
         <form className="col-md-6 offset-md-3">
           <div>
             <label>Name:</label>

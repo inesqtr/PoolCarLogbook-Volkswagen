@@ -6,9 +6,24 @@ import './TripList.css';
 
 const TripsList = ({ tripsForCalendar, isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
   const tripsList = isFiltered ? tripsByDriver : trips
-  const options = trips.map((trip) => ({ value: trip.driver, label: trip.driver }));
+
+  const options = trips
+    .reduce((acc, curr) => {
+      if (acc.includes(curr.driver)) return acc;
+      return [
+        ...acc,
+        curr.driver
+      ]
+    }
+      ,
+      []
+    )
+    .sort()
+    .map(
+      driver => ({ value: driver, label: driver }));
 
   return (
+
     <>
       <Calendar
         tripsForCalendar={tripsForCalendar}
@@ -24,7 +39,7 @@ const TripsList = ({ tripsForCalendar, isNew, trips, filterByDriver, isFiltered,
         <label>Search by Driver:</label>
         <Select
           classNamePrefix="select"
-          options={[{value:'all', label: 'All'}, {options} ]}
+          options={[{ value: 'all', label: 'All' }, { options }]}
           onChange={(e) => filterByDriver(e)}
         />
       </div>
