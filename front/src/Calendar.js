@@ -85,7 +85,6 @@ export default class Calendar extends Component {
   }
   
   render() {
-    console.log('this.state.elementToEdit Calendar',this.state.elementToEdit)
     return (
 
       <section className="content-expanded "
