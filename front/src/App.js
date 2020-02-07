@@ -32,7 +32,7 @@ class App extends Component {
             name: trip.driver,
             startDateTime: new Date(trip.date.split('00:00:00').join(trip.time_start)),
             endDateTime: new Date(trip.date.split('00:00:00').join(trip.time_finish)),
-            classes: 'color-1'
+            classes: 'color-VWpetrollight'
           }
         ))
         this.setState(state => ({

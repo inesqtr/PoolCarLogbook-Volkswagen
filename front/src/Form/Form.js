@@ -42,6 +42,13 @@ class Form extends Component {
         car_id: this.props.selectedTrip.car_id,
         id: this.props.selectedTrip.id,
       })
+    } else if (this.props.selectedDateTime) {
+      // if booking from Calendar click, prefill date and start time inputs
+      this.setState({
+        date: this.props.selectedDateTime[0][0],
+        time_start: this.props.selectedDateTime[0][1],
+      })
+      
     }
   }
 
@@ -109,10 +116,10 @@ class Form extends Component {
 
   saveNewTrip = (aftersetState) => {
     const newT = {
-      name: this.state.name, 
-      date : this.state.date, 
-      time_start: this.state.time_start, 
-      time_finish: this.state.time_finish, 
+      name: this.state.name,
+      date: this.state.date,
+      time_start: this.state.time_start,
+      time_finish: this.state.time_finish,
       kms_start: this.state.kms_start,
       kms_finish: this.state.kms_finish,
       location_start: this.state.location_start,
@@ -124,7 +131,7 @@ class Form extends Component {
     }
     this.setState({ newTrip: newT}, aftersetState);
   }
-  
+
   handleSubmitNew = (e) => {
     e.preventDefault();
     const { postTrip } = this.props;
@@ -136,7 +143,7 @@ class Form extends Component {
     const { editTrip } = this.props;
     this.saveNewTrip(() => editTrip(this.state.newTrip))
   }
-  
+
   render() {
     const { name,
       date,
