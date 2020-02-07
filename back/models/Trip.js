@@ -109,5 +109,16 @@ Trip.create = (trip, callback) => {
 	  },
 	);
   };
+
+  Trip.getAggregatedKmMonth = (callback) => {
+	connection.query(
+	  `SELECT EXTRACT(YEAR_MONTH FROM date) as monthYear, MAX(kms_finish),MIN(kms_start), MAX(kms_finish)-MIN(kms_start) as km
+	  		FROM trip 
+	  		GROUP BY monthYear`,
+	  (err, results, fields) => {
+		callback(err, results, fields);
+	  },
+	);
+  };
   
 module.exports = Trip;
