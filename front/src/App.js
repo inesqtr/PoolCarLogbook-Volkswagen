@@ -159,11 +159,10 @@ class App extends Component {
           tripsForCalendar={tripsForCalendar}
           isNew={isNew}
           trips={trips}
-          selectedTrip={selectedTrip}
+          //selectedTrip={selectedTrip}
           handleSelectTrip={this.state.handleSelectTrip}
           editTrip={this.editTrip}
           //triplocation={routerProps.location.state}
-          editTrip={this.editTrip}
         />
 
         <Route
