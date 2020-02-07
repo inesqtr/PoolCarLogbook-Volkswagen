@@ -113,6 +113,7 @@ class App extends Component {
 
   //fetch to delete booking info
   deleteTrip = (newTrip) => {
+    console.log('delete hey')
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
       method: "DELETE",
       headers: new Headers({
@@ -177,6 +178,8 @@ class App extends Component {
                 trips={trips}
                 handleSelectTrip={this.state.handleSelectTrip}
                 editTrip={this.editTrip}
+                postTrip={this.postTrip}
+                deleteTrip={this.deleteTrip}
               />
             )}
           />
@@ -196,6 +199,7 @@ class App extends Component {
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
+                deleteTrip={this.deleteTrip}
               />
             )}
           />
