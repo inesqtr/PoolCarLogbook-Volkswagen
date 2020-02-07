@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 
-
 const connection = require('../db/config');
 
 const Trip = {};
