@@ -208,6 +208,7 @@ class App extends Component {
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
+                trips={trips}
               />
             )}
           />
@@ -216,7 +217,8 @@ class App extends Component {
             path='/trips/:id'
             render={(routerProps) =>
               <EditTrip
-                trip={routerProps.location.state}
+                // trip={routerProps.location.state}
+                trips={trips}
                 isNew={isNew}
                 selectedTrip={selectedTrip}
                 editTrip={this.editTrip}

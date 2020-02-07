@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import './Booking.css';
 
-const Booking = ({ isNew, postTrip, onChange, selectedDateTime }) => {
+const Booking = ({ isNew, postTrip, onChange, selectedDateTime, trips }) => {
   return (
     <section className="booking-page">
       <Link to="/" className='backButton'>Go Back</Link>
@@ -13,6 +13,7 @@ const Booking = ({ isNew, postTrip, onChange, selectedDateTime }) => {
         isNew={isNew}
         postTrip={postTrip}
         onChange={onChange}
+        trips={trips}
       />
     </section>
   );
