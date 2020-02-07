@@ -21,6 +21,7 @@ class Form extends Component {
       is_finished: 0,
       car_id: 1,
       licence_plate: "72-VZ-96",
+      id: "",
       newTrip: {}
     };
   }
@@ -39,6 +40,7 @@ class Form extends Component {
         observations: this.props.selectedTrip.observations,
         is_finished: this.props.selectedTrip.is_finished,
         car_id: this.props.selectedTrip.car_id,
+        id: this.props.selectedTrip.id,
       })
     }
   }
@@ -88,7 +90,7 @@ class Form extends Component {
     return <button onClick={this.handleSubmitEdit}>Save changes</button>
   }
 
-  saveNewTrip = (afterStateSaved) => {
+  saveNewTrip = (aftersetState) => {
     const newT = {
       name: this.state.name,
       date: this.state.date,
@@ -100,9 +102,10 @@ class Form extends Component {
       location_destination: this.state.location_destination,
       observations: this.state.observations,
       is_finished: this.state.is_finished,
-      car_id: this.state.car_id
+      car_id: this.state.car_id,
+      id: this.state.id
     }
-    this.setState({ newTrip: newT }, afterStateSaved);
+    this.setState({ newTrip: newT}, aftersetState);
   }
 
   handleSubmitNew = (e) => {
@@ -187,16 +190,16 @@ class Form extends Component {
             </label>
           </div>
 
-          {/* <div>
+          <div>
       <label>
       Car:
-      <Select
-      classNamePrefix="select"
-      options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
-      onChange={this.onChange}/>
-      />
       </label>
-      </div> */}
+      {/* <Select
+      classNamePrefix="select"
+      options={this.state.car_id}
+      onChange={this.onChange}
+      /> */}
+      </div>
           <div>
             <label>
               Destination:
