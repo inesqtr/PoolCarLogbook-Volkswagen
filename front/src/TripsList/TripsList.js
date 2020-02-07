@@ -1,25 +1,14 @@
 import React from 'react';
 import Select from 'react-select';
 import Trip from '../Trip/Trip';
-import Calendar from '../Calendar';
 import './TripList.css';
 
-const TripsList = ({ tripsForCalendar, isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
+const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
   const tripsList = isFiltered ? tripsByDriver : trips
   const options = trips.map((trip) => ({ value: trip.driver, label: trip.driver }));
 
   return (
     <>
-      <Calendar
-        tripsForCalendar={tripsForCalendar}
-        isNew={isNew}
-        trips={trips}
-        selectedTrip={selectedTrip}
-        handleSelectTrip={handleSelectTrip}
-        postTrip={postTrip}
-        onChange={onChange}
-      />
-
       <div>
         <label>Search by Driver:</label>
         <Select

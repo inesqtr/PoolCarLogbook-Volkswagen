@@ -5,7 +5,7 @@ import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
 
-// import Calendar from './Calendar';
+import Calendar from './Calendar';
 
 
 class App extends Component {
@@ -155,7 +155,16 @@ class App extends Component {
         </button>
         <h1>Pool Car Log Book</h1>
 
-        {/* <Calendar/> */}
+        < Calendar
+          tripsForCalendar={tripsForCalendar}
+          isNew={isNew}
+          trips={trips}
+          selectedTrip={selectedTrip}
+          handleSelectTrip={this.state.handleSelectTrip}
+          editTrip={this.editTrip}
+          //triplocation={routerProps.location.state}
+          editTrip={this.editTrip}
+        />
 
         <Route
           exact

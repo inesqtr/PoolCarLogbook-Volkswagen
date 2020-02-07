@@ -3,6 +3,7 @@ import { ReactAgenda, Modal } from 'react-agenda';
 import { BrowserRouter } from 'react-router-dom';
 
 import Booking from './Booking/Booking';
+import EditTrip from './EditTrip/EditTrip'
 import './Calendar.css';
 
 
@@ -26,6 +27,7 @@ export default class Calendar extends Component {
     this.state = {
       items:[],
       selected:[],
+      elementToEdit: null,
       cellHeight: 20,
       showModal:false,
       locale:"en",
@@ -49,7 +51,7 @@ export default class Calendar extends Component {
 
   handleItemEdit = (item, openModal) => {
     if(item && openModal === true){
-      this.setState({selected:[item] })
+      this.setState({elementToEdit:[item] })
       return this._openModal();
     }
   }
@@ -75,7 +77,7 @@ export default class Calendar extends Component {
       e.stopPropagation();
       e.preventDefault();
     }
-      this.setState({showModal:false})
+      this.setState({showModal:false, elementToEdit: null})
   }
 
   handleItemChange = (items , item) => {
@@ -83,6 +85,8 @@ export default class Calendar extends Component {
   }
   
   render() {
+    console.log('this.state Calendar',this.state)
+    console.log('this.props Calendar',this.props)
     return (
 
       <section className="content-expanded "
@@ -105,17 +109,26 @@ export default class Calendar extends Component {
           view="calendar"
           autoScale={true}
           fixedHeader={true}
-          onRangeSelection={this.handleRangeSelection.bind(this)}
-          onChangeEvent={this.handleItemChange.bind(this)}
-          onItemEdit={this.handleItemEdit.bind(this)}
-          onCellSelect={this.handleCellSelection.bind(this)}
+          onRangeSelection={this.handleRangeSelection}
+          onChangeEvent={this.handleItemChange}
+          onItemEdit={this.handleItemEdit}
+          onCellSelect={this.handleCellSelection}
         />
         {
-
+        
         this.state.showModal ? 
             <Modal clickOutside={this._closeModal} >
+
               <BrowserRouter>
-                <Booking isNew={this.props.isNew} trips={this.props.trips} postTrip={this.props.postTrip}/>
+                {
+                  this.state.elementToEdit ? 
+                  <EditTrip               
+                    //trip={this.props.triplocation}
+                    isNew={this.props.isNew}
+                    selectedTrip={this.props.selectedTrip}
+                    editTrip={this.editTrip}/>
+                  : <Booking isNew={this.props.isNew} postTrip={this.props.postTrip}/>
+                }
               </BrowserRouter>
             </Modal> 
             : ''
