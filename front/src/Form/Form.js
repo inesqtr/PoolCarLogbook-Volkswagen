@@ -53,7 +53,7 @@ class Form extends Component {
   seeTripItinerary = () => {
     if (this.props.isNew) return '';
     return <div>
-      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
+      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.selectedTrip.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
         See trip itinerary
       </a>
     </div>
@@ -190,16 +190,16 @@ class Form extends Component {
             </label>
           </div>
 
-          {/* <div>
+          <div>
       <label>
       Car:
-      <Select
-      classNamePrefix="select"
-      options={car.map((item) => ({ value: item.licence_plate, label: item.licence_plate }))}
-      onChange={this.onChange}/>
-      />
       </label>
-      </div> */}
+      {/* <Select
+      classNamePrefix="select"
+      options={this.state.car_id}
+      onChange={this.onChange}
+      /> */}
+      </div>
           <div>
             <label>
               Destination:
