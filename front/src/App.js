@@ -188,88 +188,89 @@ class App extends Component {
               See All Trips
             </button>
           </Link>
-        </div>
-
-
-        <button>
           <Link to="/kmmonth">
-            Aggregated Data
+            <button>
+              Aggregated Data
+            </button>
           </Link>
-        </button>
-
-        <Switch>
-          <Route
-            exact path="/"
-            render={() => (
-              < Calendar
-                tripsForCalendar={tripsForCalendar}
-                isNew={isNew}
-                trips={trips}
-                handleSelectTrip={this.state.handleSelectTrip}
-                editTrip={this.editTrip}
-                postTrip={this.postTrip}
-                deleteTrip={this.deleteTrip}
-              />
-            )}
-          />
-
-          <Route
-            exact
-            path="/tripslist"
-            render={() => (
-              <TripsList
-                tripsForCalendar={tripsForCalendar}
-                trips={trips}
-                tripsByDriver={tripsByDriver}
-                selectedTrip={selectedTrip}
-                handleSelectTrip={this.handleSelectTrip}
-                filterByDriver={this.filterByDriver}
-                isFiltered={isFiltered}
-                isNew={isNew}
-                postTrip={this.postTrip}
-                onChange={this.onChange}
-                deleteTrip={this.deleteTrip}
-              />
-            )}
-          />
-
-          <Route
-            exact
-            path="/booking"
-            render={() => (
-              <Booking
-                isNew={isNew}
-                postTrip={this.postTrip}
-                onChange={this.onChange}
-                trips={trips}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/kmmonth"
-            render={() => (
-              <AggregatedKmMonth
-                kmMonth={kmMonth}
-              />
-            )}
-          />
-
-          <Route
-            path='/trips/:id'
-            render={(routerProps) =>
-              <EditTrip
-                // trip={routerProps.location.state}
-                trips={trips}
-                isNew={isNew}
-                selectedTrip={selectedTrip}
-                editTrip={this.editTrip}
-                deleteTrip={this.deleteTrip}
-              />}
-          />
-        </Switch>
-
       </div>
+
+
+
+
+      <Switch>
+        <Route
+          exact path="/"
+          render={() => (
+            < Calendar
+              tripsForCalendar={tripsForCalendar}
+              isNew={isNew}
+              trips={trips}
+              handleSelectTrip={this.state.handleSelectTrip}
+              editTrip={this.editTrip}
+              postTrip={this.postTrip}
+              deleteTrip={this.deleteTrip}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/tripslist"
+          render={() => (
+            <TripsList
+              tripsForCalendar={tripsForCalendar}
+              trips={trips}
+              tripsByDriver={tripsByDriver}
+              selectedTrip={selectedTrip}
+              handleSelectTrip={this.handleSelectTrip}
+              filterByDriver={this.filterByDriver}
+              isFiltered={isFiltered}
+              isNew={isNew}
+              postTrip={this.postTrip}
+              onChange={this.onChange}
+              deleteTrip={this.deleteTrip}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/booking"
+          render={() => (
+            <Booking
+              isNew={isNew}
+              postTrip={this.postTrip}
+              onChange={this.onChange}
+              trips={trips}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/kmmonth"
+          render={() => (
+            <AggregatedKmMonth
+              kmMonth={kmMonth}
+            />
+          )}
+        />
+
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              // trip={routerProps.location.state}
+              trips={trips}
+              isNew={isNew}
+              selectedTrip={selectedTrip}
+              editTrip={this.editTrip}
+              deleteTrip={this.deleteTrip}
+            />}
+        />
+      </Switch>
+
+      </div >
     );
   }
 }
