@@ -59,11 +59,6 @@ export default class Calendar extends Component {
     this.setState({selected:[item] })
   }
 
-  handleRangeSelection = (selected) => {
-    this.setState({selected:selected , showCtrl:true});
-    this._openModal();
-  }
-
   _openModal = () => {
     this.setState({showModal:true})
   }
@@ -98,11 +93,10 @@ export default class Calendar extends Component {
           headFormat={"ddd DD MMM"}
           rowsPerHour={this.state.rowsPerHour}
           itemColors={colors}
-          helper={true}
+          helper={false}
           view="calendar"
           autoScale={true}
           fixedHeader={true}
-          onRangeSelection={this.handleRangeSelection}
           onChangeEvent={this.handleItemChange}
           onItemEdit={this.handleItemEdit}
           onCellSelect={this.handleCellSelection}
