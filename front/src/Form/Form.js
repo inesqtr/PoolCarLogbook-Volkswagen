@@ -1,25 +1,9 @@
 import React, { Component } from 'react';
-import './Form.css';
 import Select from 'react-select';
 import { withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
+import './Form.css';
 
-
-
-// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
-//  const Form = ({ isNew, trip }) => {
-//  const showCheckboxAndDelete = () => {
-//    if (!isNew && trip.is_finished) return '';
-//    if (!isNew) return <div>I've finished the trip</div>;
-//
-//  }
-
-//  const hideSubmitButton = () => {
-//    if (!isNew && trip.is_finished) return true;
-//  }
-
-//  {showCheckboxAndDelete()}
-//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
 
 class Form extends Component {
   constructor(props) {
@@ -44,7 +28,7 @@ class Form extends Component {
   componentDidMount() {
     if (this.props.selectedTrip) {
       this.setState({
-        name : this.props.selectedTrip.driver,
+        name: this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
@@ -63,6 +47,7 @@ class Form extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  //link to itinerary map
   seeTripItinerary = () => {
     if (this.props.isNew) return '';
     return <div>
@@ -72,6 +57,7 @@ class Form extends Component {
     </div>
   }
 
+  //render checkbox if trip is not finished
   showCheckbox = () => {
     if (this.props.isNew) return '';
     if (!this.props.isNew && this.props.selectedTrip.is_finished) return '';
@@ -88,12 +74,14 @@ class Form extends Component {
     }
   }
 
+  //show delete button if trip is not finished
   hideDeleteButton = () => {
     if (this.props.isNew) return '';
     if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
     return <button onClick={() => this.props.deleteTrip(this.props.selectedTrip)}>Delete</button>
   }
 
+  //show save/edit/none button if booking/editing/finished trip
   hideSubmitButton = () => {
     if (this.props.isNew) return <button onClick={this.handleSubmitNew}>Save</button>
     if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
@@ -174,7 +162,7 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_start"
-                min="07:00" 
+                min="07:00"
                 max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
                 required
@@ -189,7 +177,7 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_finish"
-                min="07:00" 
+                min="07:00"
                 max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}"
                 required
@@ -245,8 +233,6 @@ class Form extends Component {
               />
             </label>
           </div>
-
-
 
           <div>
             <label>
