@@ -1,10 +1,10 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 const Trip = ({ trip, handleSelectTrip }) => {
+    //change text button if trip is finished or not
     const buttonText = trip.is_finished ? 'See More' : 'Edit'
- 
+
     return (
         <tbody>
             <tr>
@@ -17,8 +17,7 @@ const Trip = ({ trip, handleSelectTrip }) => {
                 <td>{trip.driver}</td>
                 <td>{trip.location_destination}</td>
                 <td>
-                    <button
-                    onClick={()=> handleSelectTrip(trip)}>
+                    <button onClick={() => handleSelectTrip(trip)}>
                         {buttonText}
                     </button>
                 </td>

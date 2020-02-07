@@ -3,9 +3,11 @@ import Select from 'react-select';
 import Trip from '../Trip/Trip';
 import './TripList.css';
 
-const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
+const TripsList = ({ trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip }) => {
+  //get trips array to render on list
   const tripsList = isFiltered ? tripsByDriver : trips
 
+  //get all unique drivers in trips and render their names in the select
   const options = trips
     .reduce((acc, curr) => {
       if (acc.includes(curr.driver)) return acc;
@@ -22,7 +24,6 @@ const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, ha
       driver => ({ value: driver, label: driver }));
 
   return (
-
     <>
       <div>
         <label>Search by Driver:</label>
