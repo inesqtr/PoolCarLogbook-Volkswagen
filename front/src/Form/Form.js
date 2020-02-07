@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 import './Form.css';
 
@@ -42,6 +42,13 @@ class Form extends Component {
         car_id: this.props.selectedTrip.car_id,
         id: this.props.selectedTrip.id,
       })
+    } else if (this.props.selectedDateTime) {
+      // if booking from Calendar click, prefill date and start time inputs
+      this.setState({
+        date: this.props.selectedDateTime[0][0],
+        time_start: this.props.selectedDateTime[0][1],
+      })
+      
     }
   }
 

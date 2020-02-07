@@ -26,7 +26,8 @@ export default class Calendar extends Component {
       locale:"en",
       rowsPerHour:2,
       numberOfDays: 7,
-      startDate: new Date()
+      startDate: new Date(),
+      selectedDateTime: []
     }
   }
 
@@ -40,6 +41,7 @@ export default class Calendar extends Component {
     }
   }
 
+  // on clicking exiting trips
   handleItemEdit = (item, openModal) => {
     if(item && openModal === true){
       this.setState({elementToEdit:[item] })
@@ -47,11 +49,14 @@ export default class Calendar extends Component {
     }
   }
 
+  // on click the calendar
   handleCellSelection = (item, openModal) => {
+    // open modal and set state when double clicking
     if(this.state.selected && this.state.selected[0] === item){
+      this.setState({selectedDateTime:[item.split('T')] })
       return  this._openModal();
     }
-      this.setState({selected:[item] })
+    this.setState({selected:[item] })
   }
 
   handleRangeSelection = (selected) => {
@@ -119,7 +124,11 @@ export default class Calendar extends Component {
                     )
                   )
                 )
-                : <Booking isNew={this.props.isNew} postTrip={this.props.postTrip}/>
+                : <Booking 
+                    isNew={this.props.isNew} 
+                    postTrip={this.props.postTrip} 
+                    selectedDateTime={this.state.selectedDateTime}
+                  />
               }
             </BrowserRouter>
           </Modal> 
