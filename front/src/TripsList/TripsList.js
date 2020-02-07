@@ -40,7 +40,8 @@ const TripsList = ({ trips, filterByDriver, isFiltered, tripsByDriver, handleSel
         <thead>
           <tr>
             <th>DATE</th>
-            <th>TIME</th>
+            <th>TIME START</th>
+            <th>TIME FINISH</th>
             <th>NAME</th>
             <th>DESTINATION</th>
             <th></th>
