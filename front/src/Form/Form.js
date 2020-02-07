@@ -65,7 +65,7 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!is_finished}
+          value={!this.props.trip.is_finished}
           id="checkbox"
           name="checkedFinish"
           type="checkbox"
