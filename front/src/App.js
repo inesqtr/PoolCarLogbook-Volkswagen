@@ -13,17 +13,19 @@ class App extends Component {
     super(props);
     this.state = {
       trips: [],
+      tripsByDriver: [],
       selectedTrip: {},
-      isNew: true, 
-      tripsForCalendar: []
+      tripsForCalendar: [],
+      isNew: true,
+      isFiltered: false,
     };
   }
 
-  componentDidMount() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
-      .then(response => response.json())
-      .then(data => {
-        const caltrips = data.allTrips.map( trip => (
+  getAllTrips =  () => {
+    return fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
+    .then(response => response.json())
+    .then(data => {
+      const caltrips = data.allTrips.map( trip => (
           {
             _id           : trip.id,
             name          : trip.driver,
@@ -32,16 +34,16 @@ class App extends Component {
             classes       : 'color-1'
           }
         ))
-
-
         this.setState(state => ({
           ...state,
           trips: data.allTrips,
           tripsForCalendar: caltrips
         }));
-      }
-      )
-      
+      })
+  } 
+
+  componentDidMount() {
+    this.getAllTrips()
   };
 
   postTrip = (newTrip) => {
@@ -65,16 +67,45 @@ class App extends Component {
       })
     }).then(res => {
       if (res.status === 200) {
-        const updatedTrips= this.state.trips.push(newTrip)
-        console.log(updatedTrips, 'updatedTrips', 'newtrip', newTrip)
-        // this.setState({trips: updatedTrips})
-        return this.props.history.push("/")
+        this.getAllTrips()
+        .then(
+          () => this.props.history.push("/")
+        )
       }
     });
   };
 
-  editTrip = () => {
-    console.log('i am editing')
+  editTrip = (newTrip) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/trip/edit`,
+    {
+        method:  'PUT',
+        headers:  new Headers({
+                'Content-Type':  'application/json'
+        }),
+        body:  JSON.stringify({
+          "driver": newTrip.name,
+          "date": newTrip.date,
+          "time_start": newTrip.time_start,
+          "time_finish": newTrip.time_finish,
+          "kms_start": +newTrip.kms_start,
+          "kms_finish": +newTrip.kms_finish,
+          "location_start": newTrip.location_start,
+          "location_destination": newTrip.location_destination,
+          "observations": newTrip.observations,
+          "is_finished": +newTrip.is_finished,
+          "car_id": +newTrip.car_id,
+          "id": +newTrip.id
+        }),
+    })
+    .then(res => {
+
+      if (res.status === 200) {
+        this.getAllTrips()
+        .then(
+          () => this.props.history.push("/")
+        )
+      }
+    });
 }
 
   handleSelectTrip = (trip) => {
@@ -84,9 +115,18 @@ class App extends Component {
     }, () => this.props.history.push(`/trips/${trip.id}`))
   }
 
+  filterByDriver = (e) => {
+    const checkAll = e.value === 'all' ? false : true
+    const filtered = this.state.trips.filter(trip => trip.driver === e.value);
+    this.setState({
+      tripsByDriver: filtered,
+      isFiltered:checkAll
+    })
+  }
+
 
   render() {
-    const { trips, isNew, selectedTrip, tripsForCalendar } = this.state;
+    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
     return (
       <div className="App">
         <button><Link
@@ -105,8 +145,11 @@ class App extends Component {
               <TripsList
                 tripsForCalendar={tripsForCalendar}
                 trips={trips}
+                tripsByDriver={tripsByDriver}
                 selectedTrip={selectedTrip}
                 handleSelectTrip={this.handleSelectTrip}
+                filterByDriver={this.filterByDriver}
+                isFiltered={isFiltered}
                 isNew={isNew}
                 postTrip={this.postTrip}
                 onChange={this.onChange}
@@ -125,15 +168,15 @@ class App extends Component {
             />
           )}
         />
-        <Route 
-          path='/trips/:id' 
-          render={(routerProps) => 
-          <EditTrip 
-            trip={routerProps.location.state} 
-            isNew={isNew}
-            selectedTrip={selectedTrip}
-            editTrip={this.editTrip}
-          />}
+        <Route
+          path='/trips/:id'
+          render={(routerProps) =>
+            <EditTrip
+              trip={routerProps.location.state}
+              isNew={isNew}
+              selectedTrip={selectedTrip}
+              editTrip={this.editTrip}
+            />}
         />
       </div>
     );
