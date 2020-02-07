@@ -5,6 +5,22 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
 
+
+// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
+//  const Form = ({ isNew, trip }) => {
+//  const showCheckboxAndDelete = () => {
+//    if (!isNew && trip.is_finished) return '';
+//    if (!isNew) return <div>I've finished the trip</div>;
+//
+//  }
+
+//  const hideSubmitButton = () => {
+//    if (!isNew && trip.is_finished) return true;
+//  }
+
+//  {showCheckboxAndDelete()}
+//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +44,7 @@ class Form extends Component {
   componentDidMount() {
     if (this.props.selectedTrip) {
       this.setState({
-        name: this.props.selectedTrip.driver,
+        name : this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
@@ -44,9 +60,7 @@ class Form extends Component {
   }
 
   onChange = (e) => {
-    this.setState(
-      { [e.target.name]: e.target.value }
-    )
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   seeTripItinerary = () => {
@@ -76,20 +90,20 @@ class Form extends Component {
 
   hideDeleteButton = () => {
     if (this.props.isNew) return '';
-    if (!this.props.isNew && this.props.trip.is_finished) return ''
-    return <button>Delete</button>
+    if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
+    return <button onClick={() => this.props.deleteTrip(this.props.selectedTrip)}>Delete</button>
   }
 
   hideSubmitButton = () => {
     if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
-    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
     return <button onClick={this.handleSubmit}>Edit</button>
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { selectedTrip, editTrip, postTrip } = this.props;
-
+    
     const { name,
       date,
       time_start,
@@ -100,12 +114,13 @@ class Form extends Component {
       location_destination,
       observations,
       is_finished,
-      car_id,
+      car_id, 
       newTrip } = this.state
-
-
+    
+    
     this.setState(() => {
-      const newT = {
+      
+        const newT = {
         name,
         date,
         time_start,
@@ -132,7 +147,6 @@ class Form extends Component {
     )
   }
 
-
   render() {
     const { name,
       date,
@@ -146,9 +160,8 @@ class Form extends Component {
       is_finished,
       car_id
     } = this.state;
-    console.log(this.state)
     return (
-      <Container>
+      // <Container>
         <form className="col-md-6 offset-md-3">
           <div>
             <label>Name:</label>
@@ -268,7 +281,7 @@ class Form extends Component {
             </label>
           </div>
 
-          {this.showCheckbox()}
+          {/* {this.showCheckbox()} */}
           {this.hideSubmitButton()}
           {this.hideDeleteButton()}
         </form>

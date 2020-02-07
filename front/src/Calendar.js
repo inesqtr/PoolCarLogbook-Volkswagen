@@ -37,7 +37,6 @@ export default class Calendar extends Component {
 
   
   componentDidMount() {      
-    console.log('mounting')       
     this.setState({items:this.props.tripsForCalendar});
   }
 
@@ -49,7 +48,6 @@ export default class Calendar extends Component {
 
 
   handleItemEdit = (item, openModal) => {
-    console.log('handleItemEdit', item)
     if(item && openModal === true){
       this.setState({selected:[item] })
       return this._openModal();
@@ -57,7 +55,6 @@ export default class Calendar extends Component {
   }
 
   handleCellSelection = (item, openModal) => {
-    console.log('handleCellSelection',item)
     if(this.state.selected && this.state.selected[0] === item){
       return  this._openModal();
     }
@@ -65,7 +62,6 @@ export default class Calendar extends Component {
   }
 
   handleRangeSelection = (selected) => {
-    console.log('handleRangeSelection', selected);
     this.setState({selected:selected , showCtrl:true});
     this._openModal();
   }
@@ -75,7 +71,6 @@ export default class Calendar extends Component {
   }
 
   _closeModal = (e) => {
-    console.log("closing!")
     if(e){
       e.stopPropagation();
       e.preventDefault();
@@ -88,8 +83,6 @@ export default class Calendar extends Component {
   }
   
   render() {
-    console.log('this.props.tripsForCalendar in calendar render',this.props.tripsForCalendar)
-    console.log('this.state.items in calendar render',this.state.items)
     return (
 
       <section className="content-expanded "
