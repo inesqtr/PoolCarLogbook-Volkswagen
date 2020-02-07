@@ -85,8 +85,7 @@ export default class Calendar extends Component {
   }
   
   render() {
-    console.log('this.state Calendar',this.state)
-    console.log('this.props Calendar',this.props)
+    console.log('this.state.elementToEdit Calendar',this.state.elementToEdit)
     return (
 
       <section className="content-expanded "
@@ -118,15 +117,20 @@ export default class Calendar extends Component {
         
         this.state.showModal ? 
             <Modal clickOutside={this._closeModal} >
-
               <BrowserRouter>
                 {
-                  this.state.elementToEdit ? 
-                  <EditTrip               
-                    //trip={this.props.triplocation}
-                    isNew={this.props.isNew}
-                    selectedTrip={this.props.selectedTrip}
-                    editTrip={this.editTrip}/>
+                  this.state.elementToEdit ? (
+                    this.props.trips.map((trip)=>(
+                      trip.id === this.state.elementToEdit[0]._id &&
+                        <EditTrip               
+                          isNew={this.props.isNew}
+                          selectedTrip={trip}
+                          editTrip={this.editTrip}
+                          key={trip.id}
+                          />
+                    )
+                    )
+                  )
                   : <Booking isNew={this.props.isNew} postTrip={this.props.postTrip}/>
                 }
               </BrowserRouter>
