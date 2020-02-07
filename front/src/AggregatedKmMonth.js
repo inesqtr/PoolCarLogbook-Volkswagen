@@ -18,7 +18,6 @@ const AggregatedKmMonth = ({ kmMonth }) => {
    return (
       <section >
       {console.log(kmMonth)}
-         <h1>Aggregated Data</h1>
          <h2>Mileage per month</h2>
          
          <table>
