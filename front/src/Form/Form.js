@@ -21,6 +21,7 @@ class Form extends Component {
       is_finished: 0,
       car_id: 1,
       licence_plate: "72-VZ-96",
+      id: "",
       newTrip: {}
     };
   }
@@ -39,6 +40,7 @@ class Form extends Component {
         observations: this.props.selectedTrip.observations,
         is_finished: this.props.selectedTrip.is_finished,
         car_id: this.props.selectedTrip.car_id,
+        id: this.props.selectedTrip.id,
       })
     }
   }
@@ -100,7 +102,8 @@ class Form extends Component {
       location_destination: this.state.location_destination,
       observations: this.state.observations,
       is_finished: this.state.is_finished,
-      car_id: this.state.car_id
+      car_id: this.state.car_id,
+      id: this.state.id
     }
     this.setState({ newTrip: newT}, aftersetState);
   }
