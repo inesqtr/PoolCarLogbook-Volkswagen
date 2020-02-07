@@ -4,15 +4,15 @@ import Trip from '../Trip/Trip';
 import Calendar from '../Calendar';
 import './TripList.css';
 
-
-const TripsList = ({ isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
+const TripsList = ({ tripsForCalendar, isNew, trips, filterByDriver, isFiltered, tripsByDriver, handleSelectTrip, selectedTrip, postTrip, onChange }) => {
   const tripsList = isFiltered ? tripsByDriver : trips
   const options = trips.map((trip) => ({ value: trip.driver, label: trip.driver }));
-  
 
   return (
     <>
+    {console.log('tripsForCalendar in triplist', tripsForCalendar)}
       <Calendar
+        tripsForCalendar={tripsForCalendar}
         isNew={isNew}
         trips={trips}
         selectedTrip={selectedTrip}

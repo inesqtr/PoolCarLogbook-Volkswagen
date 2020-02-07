@@ -169,6 +169,8 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_start"
+                min="07:00" 
+                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
                 required
                 onChange={this.onChange}
@@ -182,6 +184,8 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_finish"
+                min="07:00" 
+                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}"
                 required
                 onChange={this.onChange}

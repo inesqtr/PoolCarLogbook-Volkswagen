@@ -19,51 +19,6 @@ var colors= {
 }
 
 // For testing proposes
-var items = [
-  {
-   _id            : 1,
-    name          : 'Meeting , dev staff!',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0),
-    classes       : 'color-1 color-4'
-  },
-  {
-   _id            : 2,
-    name          : 'Working lunch , Holly',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 11, 0),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 13, 0),
-    classes       : 'color-2'
-  },
-  {
-   _id            : 3,
-    name          : 'Conference , plaza',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 11 , 0),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 14 ,30),
-    classes       : 'color-4'
-  },
-  {
-   _id            : 4,
-    name          : 'Customers issues review',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate()+2, 10, 0),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate()+2, 15, 0),
-    classes       : 'color-3'
-
-  },
-  {
-    _id           :'event-5',
-    name          : 'Group activity',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate()+3, 10, 0),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate()+3, 16, 30),
-    classes       : 'color-4'
-  },
-  {
-    _id           :'event-6',
-    name          : 'Fun Day !',
-    startDateTime : new Date(now.getFullYear(), now.getMonth(), now.getDate()+7, 9, 14),
-    endDateTime   : new Date(now.getFullYear(), now.getMonth(), now.getDate()+7, 17),
-    classes       : 'color-3'
-  }
-];
 
 export default class Calendar extends Component {
   constructor(props){
@@ -75,26 +30,24 @@ export default class Calendar extends Component {
       showModal:false,
       locale:"en",
       rowsPerHour:2,
-      numberOfDays:7,
+      numberOfDays: 7,
       startDate: new Date()
     }
   }
 
   
-  
-  
-  componentDidMount() {
-    const tripsForCal = []
-    //this.setState({items:tripsForCal});
-    this.setState({items:items});
+  componentDidMount() {      
+    console.log('mounting')       
+    this.setState({items:this.props.tripsForCalendar});
   }
-
 
   componentDidUpdate(next , last) {
     if(next.items){ 
       this.setState({items:next.items});
     }
   }
+
+
   handleItemEdit = (item, openModal) => {
     console.log('handleItemEdit', item)
     if(item && openModal === true){
@@ -135,6 +88,8 @@ export default class Calendar extends Component {
   }
   
   render() {
+    console.log('this.props.tripsForCalendar in calendar render',this.props.tripsForCalendar)
+    console.log('this.state.items in calendar render',this.state.items)
     return (
 
       <section className="content-expanded "
@@ -148,12 +103,12 @@ export default class Calendar extends Component {
           endAtTime={20}
           cellHeight={this.state.cellHeight}
           locale="en"
-          items={this.state.items}
+          items={this.props.tripsForCalendar}
           numberOfDays={this.state.numberOfDays}
           headFormat={"ddd DD MMM"}
           rowsPerHour={this.state.rowsPerHour}
           itemColors={colors}
-          helper={false}
+          helper={true}
           view="calendar"
           autoScale={true}
           fixedHeader={true}
