@@ -15,6 +15,7 @@ class App extends Component {
       trips: [],
       selectedTrip: {},
       isNew: true, 
+      tripsForCalendar: []
     };
   }
 
@@ -22,12 +23,25 @@ class App extends Component {
     fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
       .then(response => response.json())
       .then(data => {
+        const caltrips = data.allTrips.map( trip => (
+          {
+            _id           : trip.id,
+            name          : trip.driver,
+            startDateTime : new Date(trip.date.split('00:00:00').join(trip.time_start)),
+            endDateTime   : new Date(trip.date.split('00:00:00').join(trip.time_finish)),
+            classes       : 'color-1'
+          }
+        ))
+
+
         this.setState(state => ({
           ...state,
-          trips: data.allTrips
+          trips: data.allTrips,
+          tripsForCalendar: caltrips
         }));
       }
       )
+      
   };
 
   postTrip = (newTrip) => {
@@ -50,7 +64,6 @@ class App extends Component {
         "car_id": +newTrip.car_id,
       })
     }).then(res => {
-
       if (res.status === 200) {
         const updatedTrips= this.state.trips.push(newTrip)
         console.log(updatedTrips, 'updatedTrips', 'newtrip', newTrip)
@@ -73,7 +86,7 @@ class App extends Component {
 
 
   render() {
-    const { trips, isNew, selectedTrip } = this.state;
+    const { trips, isNew, selectedTrip, tripsForCalendar } = this.state;
     return (
       <div className="App">
         <button><Link
@@ -90,6 +103,7 @@ class App extends Component {
           render={() => (
             <>
               <TripsList
+                tripsForCalendar={tripsForCalendar}
                 trips={trips}
                 selectedTrip={selectedTrip}
                 handleSelectTrip={this.handleSelectTrip}

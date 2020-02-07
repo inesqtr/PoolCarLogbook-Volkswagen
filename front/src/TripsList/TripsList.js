@@ -3,10 +3,14 @@ import Trip from '../Trip/Trip';
 import Calendar from '../Calendar';
 import './TripList.css';
 
-const TripsList = ({ isNew, trips, handleSelectTrip, selectedTrip, postTrip,onChange }) => {
+const TripsList = ({ tripsForCalendar, isNew, trips, handleSelectTrip, selectedTrip, postTrip,onChange }) => {
+
+
   return (
     <>
+    {console.log('tripsForCalendar in triplist', tripsForCalendar)}
       <Calendar
+        tripsForCalendar={tripsForCalendar}
         isNew={isNew}
         trips={trips}
         selectedTrip={selectedTrip}
@@ -24,6 +28,7 @@ const TripsList = ({ isNew, trips, handleSelectTrip, selectedTrip, postTrip,onCh
             <th>Edit</th>
           </tr>
         </thead>
+        {console.log(trips)}
       {trips.map((trip) => (
         <Trip
           handleSelectTrip = {handleSelectTrip}
