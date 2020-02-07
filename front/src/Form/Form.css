@@ -1,8 +1,20 @@
+.booking-page {
+    background: var(--silver50);
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.container{
+    padding-top:20px;
+    font-family: 'VWAGTheSans-Bold';
+}
 
 form{
     align-self: center;
     align-items: center;
-    background-color: red; /* this is a test */
+    background-color: var(--silver); 
 }
 
 .obs-textbox{
@@ -13,10 +25,20 @@ form{
 label{
     margin: 10px;
     max-width: 100%;
+    font-weight: 700;
 }
 
 input{
     margin: 10px;
     max-width: 100%;
+}
 
+.itinerary a{
+    color: var(--petrol);
+    font-size: 2.5vh;
+}
+
+.itinerary a:hover{
+    color: white;
+    font-size: 2.5vh;
 }

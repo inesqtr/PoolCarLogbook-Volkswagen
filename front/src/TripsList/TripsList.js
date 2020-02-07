@@ -1,4 +1,5 @@
 import React from 'react';
+import{ Link} from 'react-router-dom';
 import Select from 'react-select';
 import Trip from '../Trip/Trip';
 import './TripList.css';
@@ -24,8 +25,9 @@ const TripsList = ({ trips, filterByDriver, isFiltered, tripsByDriver, handleSel
       driver => ({ value: driver, label: driver }));
 
   return (
-    <>
-      <div>
+    <section className="tripsList">
+      <Link to="/" className='backButton'>Go Back</Link>
+      <div className="driverDropdown">
         <label>Search by Driver:</label>
         <Select
           classNamePrefix="select"
@@ -37,12 +39,11 @@ const TripsList = ({ trips, filterByDriver, isFiltered, tripsByDriver, handleSel
       <table className="tftable" border="1">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Time Start</th>
-            <th>Time Finish</th>
-            <th>Name</th>
-            <th>Destination</th>
-            <th>Edit</th>
+            <th>DATE</th>
+            <th>TIME</th>
+            <th>NAME</th>
+            <th>DESTINATION</th>
+            <th></th>
           </tr>
         </thead>
         {tripsList.map((trip) => (
@@ -53,7 +54,7 @@ const TripsList = ({ trips, filterByDriver, isFiltered, tripsByDriver, handleSel
           />
         ))}
       </table>
-    </>
+    </section>
   )
 };
 
