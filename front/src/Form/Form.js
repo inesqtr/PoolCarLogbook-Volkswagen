@@ -5,6 +5,22 @@ import { withRouter, Redirect } from 'react-router-dom'
 import { Container } from 'react-bootstrap';
 
 
+
+// MAKE IT WORK WITH CONSTRUCTOR AFTER MERGING
+//  const Form = ({ isNew, trip }) => {
+//  const showCheckboxAndDelete = () => {
+//    if (!isNew && trip.is_finished) return '';
+//    if (!isNew) return <div>I've finished the trip</div>;
+//
+//  }
+
+//  const hideSubmitButton = () => {
+//    if (!isNew && trip.is_finished) return true;
+//  }
+
+//  {showCheckboxAndDelete()}
+//  {hideSubmitButton() ? '' : <input type="submit" value="Submit" />}
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +44,7 @@ class Form extends Component {
   componentDidMount() {
     if (this.props.selectedTrip) {
       this.setState({
-        name: this.props.selectedTrip.driver,
+        name : this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
         time_start: this.props.selectedTrip.time_start,
         time_finish: this.props.selectedTrip.time_finish,
@@ -63,7 +79,7 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!this.state.is_finished}
+          value={!this.props.trip.is_finished}
           id="checkbox"
           name="checkedFinish"
           type="checkbox"
@@ -131,7 +147,6 @@ class Form extends Component {
     )
   }
 
-
   render() {
     const { name,
       date,
@@ -146,7 +161,7 @@ class Form extends Component {
       car_id
     } = this.state;
     return (
-      <Container>
+      // <Container>
         <form className="col-md-6 offset-md-3">
           <div>
             <label>Name:</label>
