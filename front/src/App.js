@@ -4,7 +4,7 @@ import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
 import EditTrip from './EditTrip/EditTrip';
-
+import AggregatedKmMonth from './AggregatedKmMonth';
 import Calendar from './Calendar';
 
 
@@ -18,8 +18,15 @@ class App extends Component {
       tripsForCalendar: [],
       isNew: true,
       isFiltered: false,
+      kmMonth: 0
     };
   }
+
+  componentDidMount() {
+    this.getAllTrips()
+    this.getAggregatedKmMonth()
+  };
+
 
   //fetch to get all info from database
   getAllTrips = () => {
@@ -42,10 +49,17 @@ class App extends Component {
         }));
       })
   }
+  getAggregatedKmMonth = () => {
+    return fetch(`${process.env.REACT_APP_SERVER_URL}/trip/kmmonth`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(state => ({
+          ...state,
+          kmMonth: data.aggregatedKmMonth
+        }));
+      })
+  }
 
-  componentDidMount() {
-    this.getAllTrips()
-  };
 
   //fetch to post booking info (create on database) 
   postTrip = (newTrip) => {
@@ -151,7 +165,7 @@ class App extends Component {
 
 
   render() {
-    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
+    const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered, kmMonth } = this.state;
     return (
       <div className="App">
         <h1>Pool Car Log Book</h1>
@@ -164,6 +178,12 @@ class App extends Component {
         <button>
           <Link to="/tripslist">
             See All Trips
+          </Link>
+        </button>
+
+        <button>
+          <Link to="/kmmonth">
+            Aggregated Data
           </Link>
         </button>
 
@@ -209,6 +229,15 @@ class App extends Component {
                 postTrip={this.postTrip}
                 onChange={this.onChange}
                 trips={trips}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/kmmonth"
+            render={() => (
+              <AggregatedKmMonth
+                kmMonth={kmMonth}
               />
             )}
           />

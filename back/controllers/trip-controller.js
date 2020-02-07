@@ -29,10 +29,20 @@ const createTrip = (req, res, next) => {
     });
   };
 
+
+  const getAggregatedKmMonth = (req, res, next) => {
+    Trip.getAggregatedKmMonth((err, results) => {
+        if (err) return next(err);
+        return res.json({ aggregatedKmMonth: results });
+    });
+  };
+  
+
 module.exports = { 
     getAllTrips,
     createTrip,
     editTrip,
     deleteTrip,
+    getAggregatedKmMonth
 };
 
