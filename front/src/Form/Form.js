@@ -41,8 +41,8 @@ class Form extends Component {
     };
   }
 
-  componentDidMount(){
-    if(this.props.selectedTrip){
+  componentDidMount() {
+    if (this.props.selectedTrip) {
       this.setState({
         name : this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date,
@@ -61,70 +61,105 @@ class Form extends Component {
 
   onChange = (e) => {
     this.setState(
-      {[e.target.name]: e.target.value}
+      { [e.target.name]: e.target.value }
     )
   }
 
-  showCheckboxAndDelete = () => {
-    if (!this.props.isNew && this.state.is_finished) return '';
-    if (!this.props.isNew) return <div>I've finished the trip</div>;
+  seeTripItinerary = () => {
+    if (this.props.isNew) return '';
+    return <div>
+      <a href={`https://www.google.com/maps/dir/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa/${encodeURI(this.props.location_destination)}/Volkswagen+Digital+Solutions,+Unipessoal+Lda,+Rua+do+Sol+ao+Rato+11,+1250-018+Lisboa`} target="_blank">
+        See trip itinerary
+      </a>
+    </div>
   }
-  
+
+  showCheckbox = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return '';
+    if (!this.props.isNew) {
+      return <div>
+        <label for="checkbox">I've finished the trip</label>
+        <input
+          value={!is_finished}
+          id="checkbox"
+          name="checkedFinish"
+          type="checkbox"
+          onChange={this.onChange} />
+      </div>
+    }
+  }
+
+  hideDeleteButton = () => {
+    if (this.props.isNew) return '';
+    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    return <button>Delete</button>
+  }
+
   hideSubmitButton = () => {
     if (!this.props.isNew && this.state.is_finished) return true;
   }
-  
+
   handleSubmit = (e) => {
     e.preventDefault();
-    const {selectedTrip, editTrip, postTrip } = this.props;
-    const {name, 
-      date, 
-      time_start, 
-      time_finish, 
-      kms_start, 
-      kms_finish, 
-      location_start, 
-      location_destination, 
-      observations, 
-      is_finished, 
-      car_id, 
+    const { selectedTrip, editTrip, postTrip } = this.props;
+
+    const { name,
+      date,
+      time_start,
+      time_finish,
+      kms_start,
+      kms_finish,
+      location_start,
+      location_destination,
+      observations,
+      is_finished,
+      car_id,
       newTrip } = this.state
 
-    this.setState({newTrip: {name, 
-      date, 
-      time_start, 
-      time_finish, 
-      kms_start, 
-      kms_finish, 
-      location_start, 
-      location_destination, 
-      observations, 
-      is_finished, 
-      car_id }}, () => {
-      if(selectedTrip && selectedTrip.id){
-        editTrip()
-      }else{
-        console.log('newTrip', newTrip)
-        postTrip(newTrip)
-      }}
-      )
+
+    this.setState(() => {
+      const newT = {
+        name,
+        date,
+        time_start,
+        time_finish,
+        kms_start,
+        kms_finish,
+        location_start,
+        location_destination,
+        observations,
+        is_finished,
+        car_id
+      }
+
+      return { newTrip: newT }
+    },
+      () => {
+
+        if (selectedTrip && selectedTrip.id) {
+          editTrip(newTrip)
+        } else {
+          postTrip(newTrip)
+        }
+      }
+    )
   }
 
   render() {
-    console.log(this.state.date, 'date')
-    const { name, 
-            date, 
-            time_start, 
-            time_finish, 
-            kms_start, 
-            kms_finish, 
-            location_start, 
-            location_destination, 
-            observations, 
-            is_finished, 
-            car_id 
-          } = this.state;
-
+    const { name,
+      date,
+      time_start,
+      time_finish,
+      kms_start,
+      kms_finish,
+      location_start,
+      location_destination,
+      observations,
+      is_finished,
+      car_id
+    } = this.state;
+    console.log(this.state)
     return (
       // <Container>
         <form className="col-md-6 offset-md-3">
@@ -160,6 +195,8 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_start"
+                min="07:00" 
+                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
                 required
                 onChange={this.onChange}
@@ -173,6 +210,8 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_finish"
+                min="07:00" 
+                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}"
                 required
                 onChange={this.onChange}
@@ -191,6 +230,7 @@ class Form extends Component {
       />
       </label>
       </div> */}
+<<<<<<< HEAD
       
       <div>
       <label>
@@ -249,6 +289,64 @@ class Form extends Component {
       </div>
       </form>
       // </Container>
+=======
+          <div>
+            <label>
+              Destination:
+              <input
+                name="location_destination"
+                type="text"
+                onChange={this.onChange}
+                value={location_destination}
+              />
+            </label>
+          </div>
+
+          {this.seeTripItinerary()}
+
+          <div>
+            <label>
+              Kms start:
+              <input
+                name="kms_start"
+                type="number"
+                onChange={this.onChange}
+                value={kms_start}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Kms finish:
+              <input
+                name="kms_finish"
+                type="number"
+                onChange={this.onChange}
+                value={kms_finish}
+              />
+            </label>
+          </div>
+
+
+
+          <div>
+            <label>
+              Observations:
+              <textarea
+                name="observations"
+                className="obs-textbox"
+                onChange={this.onChange}
+                value={observations}
+              />
+            </label>
+          </div>
+
+          {this.showCheckbox()}
+          {this.hideSubmitButton()}
+          {this.hideDeleteButton()}
+        </form>
+      </Container>
+>>>>>>> 742854b194eab6586f19fbbb2967c9a9afc6af2e
     )
   }
 };

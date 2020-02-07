@@ -15,7 +15,6 @@ Trip.getAll = (cb) => {
 };
 
 Trip.create = (trip, callback) => {
-	
 	connection.query(
 		`INSERT INTO trip (
 			driver, 
