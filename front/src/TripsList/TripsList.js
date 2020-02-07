@@ -10,7 +10,6 @@ const TripsList = ({ tripsForCalendar, isNew, trips, filterByDriver, isFiltered,
 
   return (
     <>
-    {console.log('tripsForCalendar in triplist', tripsForCalendar)}
       <Calendar
         tripsForCalendar={tripsForCalendar}
         isNew={isNew}

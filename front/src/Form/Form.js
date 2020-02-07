@@ -44,9 +44,7 @@ class Form extends Component {
   }
 
   onChange = (e) => {
-    this.setState(
-      { [e.target.name]: e.target.value }
-    )
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   seeTripItinerary = () => {
@@ -65,7 +63,7 @@ class Form extends Component {
       return <div>
         <label for="checkbox">I've finished the trip</label>
         <input
-          value={!is_finished}
+          value={!this.state.is_finished}
           id="checkbox"
           name="checkedFinish"
           type="checkbox"
@@ -76,20 +74,20 @@ class Form extends Component {
 
   hideDeleteButton = () => {
     if (this.props.isNew) return '';
-    if (!this.props.isNew && this.props.trip.is_finished) return ''
-    return <button>Delete</button>
+    if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
+    return <button onClick={() => this.props.deleteTrip(this.props.selectedTrip)}>Delete</button>
   }
 
   hideSubmitButton = () => {
     if (this.props.isNew) return <button onClick={this.handleSubmit}>Save</button>
-    if (!this.props.isNew && this.props.trip.is_finished) return ''
+    if (!this.props.isNew && this.props.selectedTrip.is_finished) return ''
     return <button onClick={this.handleSubmit}>Edit</button>
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { selectedTrip, editTrip, postTrip } = this.props;
-
+    
     const { name,
       date,
       time_start,
@@ -100,12 +98,13 @@ class Form extends Component {
       location_destination,
       observations,
       is_finished,
-      car_id,
+      car_id, 
       newTrip } = this.state
-
-
+    
+    
     this.setState(() => {
-      const newT = {
+      
+        const newT = {
         name,
         date,
         time_start,
@@ -146,7 +145,6 @@ class Form extends Component {
       is_finished,
       car_id
     } = this.state;
-    console.log(this.state)
     return (
       <Container>
         <form className="col-md-6 offset-md-3">
@@ -268,7 +266,7 @@ class Form extends Component {
             </label>
           </div>
 
-          {this.showCheckbox()}
+          {/* {this.showCheckbox()} */}
           {this.hideSubmitButton()}
           {this.hideDeleteButton()}
         </form>

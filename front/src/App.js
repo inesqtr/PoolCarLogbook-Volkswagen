@@ -108,8 +108,28 @@ class App extends Component {
     });
 }
 
+  deleteTrip = (newTrip) => {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
+        method: "DELETE",
+        headers: new Headers({
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({
+          "id": +newTrip.id
+        })
+      })
+      .then(res => {
+
+        if (res.status === 200) {
+          this.getAllTrips()
+          .then(
+            () => this.props.history.push("/")
+          )
+        }
+      });
+  }
+
   handleSelectTrip = (trip) => {
-    console.log('trip', trip)
     this.setState({
       selectedTrip: trip
     }, () => this.props.history.push(`/trips/${trip.id}`))
@@ -176,6 +196,7 @@ class App extends Component {
               isNew={isNew}
               selectedTrip={selectedTrip}
               editTrip={this.editTrip}
+              deleteTrip={this.deleteTrip}
             />}
         />
       </div>
