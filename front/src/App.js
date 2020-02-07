@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Route, Link, withRouter, Switch } from 'react-router-dom';
 import './App.css';
 import TripsList from './TripsList/TripsList';
 import Booking from './Booking/Booking';
@@ -21,17 +21,18 @@ class App extends Component {
     };
   }
 
-  getAllTrips =  () => {
+  //fetch to get all info from database
+  getAllTrips = () => {
     return fetch(`${process.env.REACT_APP_SERVER_URL}/trips`)
-    .then(response => response.json())
-    .then(data => {
-      const caltrips = data.allTrips.map( trip => (
+      .then(response => response.json())
+      .then(data => {
+        const caltrips = data.allTrips.map(trip => (
           {
-            _id           : trip.id,
-            name          : trip.driver,
-            startDateTime : new Date(trip.date.split('00:00:00').join(trip.time_start)),
-            endDateTime   : new Date(trip.date.split('00:00:00').join(trip.time_finish)),
-            classes       : 'color-1'
+            _id: trip.id,
+            name: trip.driver,
+            startDateTime: new Date(trip.date.split('00:00:00').join(trip.time_start)),
+            endDateTime: new Date(trip.date.split('00:00:00').join(trip.time_finish)),
+            classes: 'color-1'
           }
         ))
         this.setState(state => ({
@@ -40,12 +41,13 @@ class App extends Component {
           tripsForCalendar: caltrips
         }));
       })
-  } 
+  }
 
   componentDidMount() {
     this.getAllTrips()
   };
 
+  //fetch to post booking info (create on database) 
   postTrip = (newTrip) => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/create`, {
       method: "POST",
@@ -68,21 +70,22 @@ class App extends Component {
     }).then(res => {
       if (res.status === 200) {
         this.getAllTrips()
-        .then(
-          () => this.props.history.push("/")
-        )
+          .then(
+            () => this.props.history.push("/")
+          )
       }
     });
   };
 
+  //fetch to edit booking info on database
   editTrip = (newTrip) => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/edit`,
-    {
-        method:  'PUT',
-        headers:  new Headers({
-                'Content-Type':  'application/json'
+      {
+        method: 'PUT',
+        headers: new Headers({
+          'Content-Type': 'application/json'
         }),
-        body:  JSON.stringify({
+        body: JSON.stringify({
           "driver": newTrip.name,
           "date": newTrip.date,
           "time_start": newTrip.time_start,
@@ -96,35 +99,36 @@ class App extends Component {
           "car_id": +newTrip.car_id,
           "id": +newTrip.id
         }),
-    })
-    .then(res => {
-
-      if (res.status === 200) {
-        this.getAllTrips()
-        .then(
-          () => this.props.history.push("/")
-        )
-      }
-    });
-}
-
-  deleteTrip = (newTrip) => {
-      fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
-        method: "DELETE",
-        headers: new Headers({
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({
-          "id": +newTrip.id
-        })
       })
       .then(res => {
 
         if (res.status === 200) {
           this.getAllTrips()
-          .then(
-            () => this.props.history.push("/")
-          )
+            .then(
+              () => this.props.history.push("/tripslist")
+            )
+        }
+      });
+  }
+
+  //fetch to delete booking info
+  deleteTrip = (newTrip) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
+      method: "DELETE",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({
+        "id": +newTrip.id
+      })
+    })
+      .then(res => {
+
+        if (res.status === 200) {
+          this.getAllTrips()
+            .then(
+              () => this.props.history.push("/tripslist")
+            )
         }
       });
   }
@@ -135,12 +139,13 @@ class App extends Component {
     }, () => this.props.history.push(`/trips/${trip.id}`))
   }
 
+  //filter information by driver on the trips list dropdown
   filterByDriver = (e) => {
     const checkAll = e.value === 'all' ? false : true
     const filtered = this.state.trips.filter(trip => trip.driver === e.value);
     this.setState({
       tripsByDriver: filtered,
-      isFiltered:checkAll
+      isFiltered: checkAll
     })
   }
 
@@ -149,28 +154,40 @@ class App extends Component {
     const { trips, isNew, selectedTrip, tripsForCalendar, tripsByDriver, isFiltered } = this.state;
     return (
       <div className="App">
-        <button><Link
-          to="/booking">
-          Book</Link>
-        </button>
         <h1>Pool Car Log Book</h1>
+        <button>
+          <Link to="/booking">
+            Book
+          </Link>
+        </button>
 
-        < Calendar
-          tripsForCalendar={tripsForCalendar}
-          isNew={isNew}
-          trips={trips}
-          selectedTrip={selectedTrip}
-          handleSelectTrip={this.state.handleSelectTrip}
-          editTrip={this.editTrip}
-          //triplocation={routerProps.location.state}
-          editTrip={this.editTrip}
-        />
+        <button>
+          <Link to="/tripslist">
+            See All Trips
+          </Link>
+        </button>
 
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <>
+        <Switch>
+          <Route
+            exact path="/"
+            render={() => (
+              < Calendar
+                tripsForCalendar={tripsForCalendar}
+                isNew={isNew}
+                trips={trips}
+                selectedTrip={selectedTrip}
+                handleSelectTrip={this.state.handleSelectTrip}
+                editTrip={this.editTrip}
+                //triplocation={routerProps.location.state}
+                editTrip={this.editTrip}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path="/tripslist"
+            render={() => (
               <TripsList
                 tripsForCalendar={tripsForCalendar}
                 trips={trips}
@@ -183,31 +200,34 @@ class App extends Component {
                 postTrip={this.postTrip}
                 onChange={this.onChange}
               />
-            </>
-          )}
-        />
-        <Route
-          exact
-          path="/booking"
-          render={() => (
-            <Booking
-              isNew={isNew}
-              postTrip={this.postTrip}
-              onChange={this.onChange}
-            />
-          )}
-        />
-        <Route
-          path='/trips/:id'
-          render={(routerProps) =>
-            <EditTrip
-              trip={routerProps.location.state}
-              isNew={isNew}
-              selectedTrip={selectedTrip}
-              editTrip={this.editTrip}
-              deleteTrip={this.deleteTrip}
-            />}
-        />
+            )}
+          />
+
+          <Route
+            exact
+            path="/booking"
+            render={() => (
+              <Booking
+                isNew={isNew}
+                postTrip={this.postTrip}
+                onChange={this.onChange}
+              />
+            )}
+          />
+          
+          <Route
+            path='/trips/:id'
+            render={(routerProps) =>
+              <EditTrip
+                trip={routerProps.location.state}
+                isNew={isNew}
+                selectedTrip={selectedTrip}
+                editTrip={this.editTrip}
+                deleteTrip={this.deleteTrip}
+              />}
+          />
+        </Switch>
+
       </div>
     );
   }
