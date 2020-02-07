@@ -120,6 +120,7 @@ export default class Calendar extends Component {
                         selectedTrip={trip}
                         editTrip={this.editTrip}
                         key={trip.id}
+                        trips={this.props.trips}
                       />
                     )
                   )
@@ -128,6 +129,7 @@ export default class Calendar extends Component {
                     isNew={this.props.isNew} 
                     postTrip={this.props.postTrip} 
                     selectedDateTime={this.state.selectedDateTime}
+                    trips={this.props.trips}
                   />
               }
             </BrowserRouter>
