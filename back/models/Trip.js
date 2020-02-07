@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 
-
 const connection = require('../db/config');
 
 const Trip = {};
@@ -15,7 +14,6 @@ Trip.getAll = (cb) => {
 };
 
 Trip.create = (trip, callback) => {
-	
 	connection.query(
 		`INSERT INTO trip (
 			driver, 
