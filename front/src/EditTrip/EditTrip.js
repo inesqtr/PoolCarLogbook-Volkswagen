@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 
-const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip,trips }) => {
+const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip, trips, closeModal }) => {
   return (
     <section className="booking-page">
       <Link to="/" className='backButton'>Go Back</Link>
@@ -14,6 +14,7 @@ const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip,trips }) => 
         editTrip={editTrip}
         deleteTrip={deleteTrip}
         trips={trips}
+        closeModal={closeModal}
       />
     </section>
   );

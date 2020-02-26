@@ -20,12 +20,12 @@ class Form extends Component {
       observations: "",
       is_finished: 0,
       car_id: 1,
-      licence_plate: "",
+      licence_plate: "Select car...",
       id: "",
       newTrip: {}
     };
   }
-
+  
   componentDidMount() {
     if (this.props.selectedTrip) {
       this.setState({
@@ -57,9 +57,10 @@ class Form extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  // on changing the car dropdown
   onChangeSelect = (e) => {
     this.setState({
-      licence_plate: e.value,
+      car_id: e.value,
     })
   }
 
@@ -130,23 +131,28 @@ class Form extends Component {
     e.preventDefault();
     const { postTrip } = this.props;
     this.saveNewTrip(() => postTrip(this.state.newTrip))
+    if (this.props.closeModal) this.handleCloseModal();
   }
 
   handleSubmitEdit = (e) => {
     e.preventDefault();
     const { editTrip } = this.props;
     this.saveNewTrip(() => editTrip(this.state.newTrip))
+    if (this.props.closeModal) this.handleCloseModal();
   }
   
   handleSubmitDelete = (e) => {
     e.preventDefault();
     const { deleteTrip } = this.props;
     this.saveNewTrip(() => deleteTrip(this.state.newTrip))
+    if (this.props.closeModal) this.handleCloseModal();
+  }
 
+  handleCloseModal = () => {
+    this.props.closeModal();
   }
 
   render() {
-
     const { name,
       date,
       time_start,
@@ -156,7 +162,9 @@ class Form extends Component {
       location_destination,
       observations,
       licence_plate,
+      car_id
     } = this.state;
+    console.log('car',licence_plate, car_id)
     return (
       <Container>
         <form className="col-md-6 offset-md-3">
@@ -192,8 +200,6 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_start"
-                min="07:00"
-                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}" // unsuported browsers fallback
                 required
                 onChange={this.onChange}
@@ -207,8 +213,6 @@ class Form extends Component {
               <input
                 type="time"
                 name="time_finish"
-                min="07:00"
-                max="20:00"
                 pattern="[0-9]{2}:[0-9]{2}"
                 required
                 onChange={this.onChange}
@@ -222,24 +226,28 @@ class Form extends Component {
       Car:
       </label>
       <Select
-      classNamePrefix="select"
-      name="licence_plate"
-      options={this.props.trips.reduce((acc, curr) => {
-        if (acc.includes(curr.licence_plate)) {
-          return acc;
-        } 
-        return [
-          ...acc,
-          curr.licence_plate
-        ]
-      }
+        classNamePrefix="select"
+        name="licence_plate"
+        options={this.props.trips.reduce((acc, curr) => {
+          if (acc.includes(curr.licence_plate+curr.car_id)) {
+            return acc;
+          } else {
+            return [
+              ...acc,
+              curr.licence_plate+curr.car_id
+            ]
+          }
+        }
         ,
         []
-      )
+        )
         .map(
-          item => ({ value: item, label: item}))
-      }
-      onChange={this.onChangeSelect}
+          item => ({ value: item.slice(-1), label: item.slice(0, -1)}))
+        }
+        defaultValue={ 
+          this.props.selectedTrip ? {value: this.props.selectedTrip.car_id, label: this.props.selectedTrip.licence_plate} : {value: car_id, label: licence_plate}
+        }
+        onChange={this.onChangeSelect}
       />
       </div>
           <div>
