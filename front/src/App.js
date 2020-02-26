@@ -171,8 +171,9 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <img src={logo} alt="logo" />
-
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
         </header>
         <h1>POOL CAR LOGBOOK</h1>
 
@@ -194,9 +195,6 @@ class App extends Component {
             </button>
           </Link>
       </div>
-
-
-
 
       <Switch>
         <Route

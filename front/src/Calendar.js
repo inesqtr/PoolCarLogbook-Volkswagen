@@ -117,6 +117,7 @@ export default class Calendar extends Component {
                         trips={this.props.trips}
                         postTrip={this.props.postTrip} 
                         deleteTrip={this.props.deleteTrip}
+                        closeModal={this._closeModal}
                       />
                     )
                   )
@@ -126,6 +127,7 @@ export default class Calendar extends Component {
                     postTrip={this.props.postTrip} 
                     selectedDateTime={this.state.selectedDateTime}
                     trips={this.props.trips}
+                    closeModal={this._closeModal}
                   />
               }
             </BrowserRouter>
