@@ -1,4 +1,5 @@
 import React from 'react';
+import './AggregatedKmMonth.css';
 
 const AggregatedKmMonth = ({ kmMonth }) => {
 
@@ -9,7 +10,7 @@ const AggregatedKmMonth = ({ kmMonth }) => {
             <tr key={i}>
                <td>{monthYear.toString().substring(0,4)}</td>
                <td>{monthYear.toString().substring(4)}</td>
-               <td>{km}</td>
+               <td>{km} km</td>
             </tr>
          )
       })
@@ -20,9 +21,9 @@ const AggregatedKmMonth = ({ kmMonth }) => {
       {console.log(kmMonth)}
          <h2>Mileage per month</h2>
          
-         <table>
+         <table className='mileageTable'>
             <tbody>
-               <tr><th>Year</th><th>Month</th><th>Monthly Mileage</th></tr>
+               <tr><th>Year</th><th>Month</th><th>Total mileage</th></tr>
                {renderTableData()}
             </tbody>
          </table>

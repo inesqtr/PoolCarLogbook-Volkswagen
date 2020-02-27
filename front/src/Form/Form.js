@@ -27,7 +27,8 @@ class Form extends Component {
   }
   
   componentDidMount() {
-    if (this.props.selectedTrip) {
+    console.log('this.props.selectedTrip', this.props.selectedTrip)
+    if (this.props.selectedTrip && (Object.keys(this.props.selectedTrip).length !== 0)) {
       this.setState({
         name: this.props.selectedTrip.driver,
         date: this.props.selectedTrip.date.split('T')[0],
@@ -49,7 +50,6 @@ class Form extends Component {
         date: this.props.selectedDateTime[0][0],
         time_start: this.props.selectedDateTime[0][1],
       })
-      
     }
   }
 
@@ -144,8 +144,8 @@ class Form extends Component {
   handleSubmitDelete = (e) => {
     e.preventDefault();
     const { deleteTrip } = this.props;
-    this.saveNewTrip(() => deleteTrip(this.state.newTrip))
     if (this.props.closeModal) this.handleCloseModal();
+    this.saveNewTrip(() => deleteTrip(this.state.newTrip))
   }
 
   handleCloseModal = () => {
@@ -153,7 +153,8 @@ class Form extends Component {
   }
 
   render() {
-    const { name,
+    const { 
+      name,
       date,
       time_start,
       time_finish,
@@ -164,10 +165,9 @@ class Form extends Component {
       licence_plate,
       car_id
     } = this.state;
-    console.log('car',licence_plate, car_id)
     return (
       <Container>
-        <form className="col-md-6 offset-md-3">
+        <form className="col-md-10 offset-md-1">
           <div>
             <label>Name:</label>
             <input

@@ -1,6 +1,6 @@
 .tripsList{
   font-family: 'VWAGTheSans-Regular';
-  width:95vw;
+  width: 90vw;
   margin: 0 auto;
   display:flex;
   flex-direction:column;
@@ -17,13 +17,13 @@
 .tftable {
   background-color: var(--silver50);
   text-align: center;
-  width:70vw;
+  width:75vw;
   font-size: 12px;
   color: var(--black);
   border-width: 1px;
   border-color: var(--reddark);
   border-collapse: collapse;
-  margin-top: 2em;
+  margin: 2em auto 5em auto;
 }
 
 .tftable th {
@@ -35,7 +35,7 @@
   padding-left: 3px;
   border-style: solid;
   border-color: var(--reddark);
-  text-align: left;
+  text-align: center;
   color: white;
 }
 
@@ -51,3 +51,8 @@
   background-color: var(--white);
 }
 
+@media screen and (max-width: 420px) {
+  .tftable {
+    width: 90vw;
+  }
+}

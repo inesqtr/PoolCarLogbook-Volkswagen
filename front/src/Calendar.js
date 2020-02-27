@@ -78,7 +78,7 @@ export default class Calendar extends Component {
   render() {
     return (
       <section className="content-expanded "
-        style={{padding:'0 10vw'}}
+        //style={{padding:'0 10vw'}}
       >
         <ReactAgenda
           minDate={new Date(now.getFullYear(), now.getMonth()-3)}

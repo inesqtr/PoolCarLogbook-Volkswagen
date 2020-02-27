@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 
 const EditTrip = ({ isNew, trip, selectedTrip, editTrip, deleteTrip, trips, closeModal }) => {
+  console.log(closeModal)
   return (
     <section className="booking-page">
       <Link to="/" className='backButton'>Go Back</Link>

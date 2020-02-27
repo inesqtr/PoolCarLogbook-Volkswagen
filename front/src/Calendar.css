@@ -20,3 +20,11 @@
 .modal-close:first-child {
    background-color: var(--white);
 }
+
+.content-expanded {
+   padding: 2vh 10vw 3vh 10vw;
+}
+
+.agenda__table.\--body {
+   height: 75vh;
+}
