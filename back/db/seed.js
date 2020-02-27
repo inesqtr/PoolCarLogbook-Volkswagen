@@ -7,18 +7,18 @@ const insertCar =
 
 const insertTrip = `INSERT INTO trip 
     (driver, 
-        date, 
-        time_start, 
-        time_finish, 
-        kms_start, 
-        kms_finish,
-        location_start,
-        location_destination,
+		date, 
+		time_start, 
+		time_finish, 
+		kms_start, 
+		kms_finish,
+		location_start,
+		location_destination,
 		observations,
 		is_finished,
-        car_id)
+      car_id)
     VALUES 
-		('Zé', 
+		('José Maria', 
 		'2020-02-12', 
 		'14:30:00', 
 		'15:30:00', 
@@ -26,10 +26,10 @@ const insertTrip = `INSERT INTO trip
 		264164,
 		'Rato',
 		'Ikea Alfragide',
-		'uau',
+		'Buy new desks',
 		false,
-		1  ),
-		('Maria', 
+		1 ),
+		('Maria José', 
 		'2020-03-12', 
 		'15:30:00', 
 		'16:30:00', 
@@ -37,7 +37,7 @@ const insertTrip = `INSERT INTO trip
 		764,
 		'Rato',
 		'Ikea Loures',
-		'wow',
+		'Retrieve the chair purchased online',
 		true,
 		2  )`;
 
