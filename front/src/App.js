@@ -50,6 +50,7 @@ class App extends Component {
         }));
       })
   }
+  
   getAggregatedKmMonth = () => {
     return fetch(`${process.env.REACT_APP_SERVER_URL}/trip/kmmonth`)
       .then(response => response.json())
@@ -128,7 +129,6 @@ class App extends Component {
 
   //fetch to delete booking info
   deleteTrip = (newTrip) => {
-    console.log('delete hey')
     fetch(`${process.env.REACT_APP_SERVER_URL}/trip/delete`, {
       method: "DELETE",
       headers: new Headers({
@@ -138,15 +138,14 @@ class App extends Component {
         "id": +newTrip.id
       })
     })
-      .then(res => {
-
-        if (res.status === 200) {
-          this.getAllTrips()
-            .then(
-              () => this.props.history.push("/tripslist")
-            )
-        }
-      });
+    .then(res => {
+      if (res.status === 200) {
+        this.getAllTrips()
+          .then(
+            () => this.props.history.push("/tripslist")
+          )
+      }
+    });
   }
 
   handleSelectTrip = (trip) => {
@@ -194,80 +193,79 @@ class App extends Component {
               Aggregated Data
             </button>
           </Link>
-      </div>
+        </div>
 
-      <Switch>
-        <Route
-          exact path="/"
-          render={() => (
-            < Calendar
-              tripsForCalendar={tripsForCalendar}
-              isNew={isNew}
-              trips={trips}
-              handleSelectTrip={this.state.handleSelectTrip}
-              editTrip={this.editTrip}
-              postTrip={this.postTrip}
-              deleteTrip={this.deleteTrip}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            exact path="/"
+            render={() => (
+              < Calendar
+                tripsForCalendar={tripsForCalendar}
+                isNew={isNew}
+                trips={trips}
+                handleSelectTrip={this.state.handleSelectTrip}
+                editTrip={this.editTrip}
+                postTrip={this.postTrip}
+                deleteTrip={this.deleteTrip}
+              />
+            )}
+          />
 
-        <Route
-          exact
-          path="/tripslist"
-          render={() => (
-            <TripsList
-              tripsForCalendar={tripsForCalendar}
-              trips={trips}
-              tripsByDriver={tripsByDriver}
-              selectedTrip={selectedTrip}
-              handleSelectTrip={this.handleSelectTrip}
-              filterByDriver={this.filterByDriver}
-              isFiltered={isFiltered}
-              isNew={isNew}
-              postTrip={this.postTrip}
-              onChange={this.onChange}
-              deleteTrip={this.deleteTrip}
-            />
-          )}
-        />
+          <Route
+            exact
+            path="/tripslist"
+            render={() => (
+              <TripsList
+                tripsForCalendar={tripsForCalendar}
+                trips={trips}
+                tripsByDriver={tripsByDriver}
+                selectedTrip={selectedTrip}
+                handleSelectTrip={this.handleSelectTrip}
+                filterByDriver={this.filterByDriver}
+                isFiltered={isFiltered}
+                isNew={isNew}
+                postTrip={this.postTrip}
+                onChange={this.onChange}
+                deleteTrip={this.deleteTrip}
+              />
+            )}
+          />
 
-        <Route
-          exact
-          path="/booking"
-          render={() => (
-            <Booking
-              isNew={isNew}
-              postTrip={this.postTrip}
-              onChange={this.onChange}
-              trips={trips}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/kmmonth"
-          render={() => (
-            <AggregatedKmMonth
-              kmMonth={kmMonth}
-            />
-          )}
-        />
+          <Route
+            exact
+            path="/booking"
+            render={() => (
+              <Booking
+                isNew={isNew}
+                postTrip={this.postTrip}
+                onChange={this.onChange}
+                trips={trips}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/kmmonth"
+            render={() => (
+              <AggregatedKmMonth
+                kmMonth={kmMonth}
+              />
+            )}
+          />
 
-        <Route
-          path='/trips/:id'
-          render={(routerProps) =>
-            <EditTrip
-              // trip={routerProps.location.state}
-              trips={trips}
-              isNew={isNew}
-              selectedTrip={selectedTrip}
-              editTrip={this.editTrip}
-              deleteTrip={this.deleteTrip}
-            />}
-        />
-      </Switch>
-
+          <Route
+            path='/trips/:id'
+            render={(routerProps) =>
+              <EditTrip
+                // trip={routerProps.location.state}
+                trips={trips}
+                isNew={isNew}
+                selectedTrip={selectedTrip}
+                editTrip={this.editTrip}
+                deleteTrip={this.deleteTrip}
+              />}
+          />
+        </Switch>
       </div >
     );
   }

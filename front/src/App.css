@@ -30,13 +30,13 @@ header{
 }
 
 header img{
-    height: 5vh;
-    width: auto;
+  height: auto;
+  width: calc(100px + 12vw);
 }
 
 h1{
   font-family: 'VWAGTheSans-Light';
-  font-size: 3.5vh;
+  font-size: calc(12px + 2.5vw);
   text-align: right;
   border-right: solid 5px var(--reddark);
   border-bottom: solid 2px var(--reddark);
@@ -45,7 +45,7 @@ h1{
 
 h2{
   font-family: 'VWAGTheSans-Bold';
-  font-size: 3.5vh;
+  font-size: 3vw;
   border-bottom: solid 2px var(--reddark);
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -58,7 +58,7 @@ h2{
   justify-content: flex-end;
 }
 
-button{
+button {
   background-color: var(--reddark) ;
   border: solid 2px var(--reddark);
   box-shadow: none;
@@ -66,7 +66,7 @@ button{
   margin:1vw;
   color: white;
   font-family: 'VWAGTheSans-Bold';
-  font-size: 2vh;
+  font-size: calc(9px + 0.5vw);
 }
 
 button:hover{
@@ -109,9 +109,15 @@ a:hover{
   color:var(--petrol);
 }
 
-@media screen and (min-width: 740px) {
+@media screen and (max-width: 740px) {
+  header img{
+    height: auto;
+    min-width: 150px;
+    width: 40vw;
+  }
+
   h1{
-    font-size: 7vh;
+    font-size: calc(8px + 5vw);
     border-right: solid 10px var(--reddark);
     border-bottom: solid 5px var(--reddark);
     width: 50vw;
@@ -120,8 +126,12 @@ a:hover{
 
   h2{
     width: 60vw;
-    font-size: 5vh;
+    font-size: calc(8px + 3vw);
     margin:auto;
+  }
+
+  button {
+    font-size: calc(8px + 1.2vw);
   }
 }
 

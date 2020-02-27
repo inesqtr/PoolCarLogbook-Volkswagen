@@ -13,10 +13,9 @@ const Trip = ({ trip, handleSelectTrip }) => {
                         {trip.date}
                     </Moment>
                 </td>
-                <td>{trip.time_start}</td>
-                <td><Moment format="HH:mm">
-                {trip.time_finish}
-            </Moment></td>
+                <td>
+                    {trip.time_start.slice(0,5)} to {trip.time_finish.slice(0,5)}
+                </td>
                 <td>{trip.driver}</td>
                 <td>{trip.location_destination}</td>
                 <td>

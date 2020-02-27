@@ -1,0 +1,43 @@
+.mileageTable  {
+   background-color: var(--silver50);
+   text-align: center;
+   width: 50vw;
+   font-size: 12px;
+   color: var(--black);
+   border-width: 1px;
+   border-color: var(--reddark);
+   border-collapse: collapse;
+   margin: 0 auto;
+   margin-top: 2em;
+}
+
+.mileageTable th {
+   text-align: center;
+   height: 7vh;
+   font-size: 1.8vh;
+   background-color: var(--reddark);
+   border-width: 1px;
+   padding-left: 3px;
+   border-style: solid;
+   border-color: var(--reddark);
+   text-align: center;
+   color: white;
+}
+
+.mileageTable td {
+   font-size: 1.8vh;
+   border-width: 1px;
+   padding: 5px;
+   border-style: solid;
+   border-color: var(--reddark);
+}
+
+.mileageTable tr:hover {
+   background-color: var(--white);
+}
+
+@media screen and (max-width: 420px) {
+   .mileageTable {
+      width: 90vw;
+   }
+}
